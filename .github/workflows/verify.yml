@@ -1,0 +1,27 @@
+name: Verify Krigsvold Astro
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        astro: ['5.18.2', '7.3.2']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: krigsvoldtheme/npm
+          ref: a8f79e1aa34ce0e179627c0e810702e47fc95671
+          path: .core
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci --ignore-scripts && npm run build && npm test
+        working-directory: .core
+      - run: npm test
+      - run: node scripts/smoke.mjs
+        env:
+          KRIGSVOLD_CORE_SOURCE: .core
+          KRIGSVOLD_ASTRO_VERSION: ${{ matrix.astro }}

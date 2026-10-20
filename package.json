@@ -1,0 +1,31 @@
+{
+  "name": "@krigsvold/astro",
+  "version": "1.0.0",
+  "description": "Reusable Astro layouts and components for the Krigsvold design system",
+  "type": "module",
+  "license": "MIT",
+  "files": ["src", "starter", "docs", "README.md", "LICENSE"],
+  "exports": {
+    ".": "./src/index.ts",
+    "./Layout.astro": "./src/components/Layout.astro",
+    "./Container.astro": "./src/components/Container.astro",
+    "./SectionHeading.astro": "./src/components/SectionHeading.astro",
+    "./Card.astro": "./src/components/Card.astro",
+    "./Button.astro": "./src/components/Button.astro",
+    "./styles.css": "./src/styles.css",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": ["**/*.css", "**/*.astro"],
+  "peerDependencies": {
+    "@krigsvold/theme": "^2.0.0",
+    "astro": "^5.14.0 || ^6.0.0 || ^7.0.0"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "prepack": "npm test"
+  },
+  "publishConfig": { "access": "public" },
+  "repository": { "type": "git", "url": "git+https://github.com/krigsvoldtheme/astro.git" },
+  "homepage": "https://krigsvoldtheme.dev/",
+  "keywords": ["astro", "astro-component", "krigsvold", "theme", "design-system"]
+}

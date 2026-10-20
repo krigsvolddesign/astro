@@ -1,2 +1,42 @@
-# astro
-Reusable Astro components and a neutral starter for the Krigsvold design system.
+# Krigsvold for Astro
+
+`@krigsvold/astro` provides reusable Astro layouts and components. The framework-independent [`@krigsvold/theme`](https://github.com/krigsvoldtheme/npm) package owns the design definitions and font roles, extracted from krigsvold.org. Astro adds composition, never a competing palette.
+
+## Install
+
+Registry publication is pending. Pack both repositories, then install both archives together:
+
+```sh
+npm install ./krigsvold-theme-2.0.0.tgz ./krigsvold-astro-1.0.0.tgz
+```
+
+After registry publication, use `npm install @krigsvold/theme @krigsvold/astro`. The GitHub organization is `krigsvoldtheme`; the npm scope is `krigsvold`.
+
+## Use
+
+```astro
+---
+import { Layout, Container, SectionHeading, Card, Button } from '@krigsvold/astro';
+---
+<Layout title="Your website" description="Your own description.">
+  <Container>
+    <h1>Your own identity</h1>
+    <SectionHeading title="An example" />
+    <Card><p>Your content.</p><Button href="/about/">About</Button></Card>
+  </Container>
+</Layout>
+```
+
+`Layout` loads core colors, foundation variables, typography, optional component styles, and local fonts. Set `mode="dark"` for Dark (default: Light). It provides head, header, footer, and body-end slots; it supplies no favicon, branding, analytics, navigation, or consent behavior. Use `mainId`, `mainTabindex`, `lang`, `class`, and `bodyClass` to adapt the shell. Metadata text uses Astro's normal escaping.
+
+Components also have direct exports such as `@krigsvold/astro/Container.astro`. For an existing document shell, import `@krigsvold/astro/styles.css`, set `data-krigsvold="light"` or `dark`, and add `class="krigsvold"` around the styled content. The framework-independent core offers narrower imports if you do not want fonts or element styling.
+
+`Container` supports content, reading, and archive widths. `SectionHeading` supports h2/h3, alignment, eyebrow, description, class hooks, and a divider slot. `Card` is an article wrapper. `Button` accepts native anchor/button attributes and defaults buttons to `type="button"`.
+
+## Starter
+
+Copy `starter/` to a new project. Until registry publication, install the two local archives before building. It contains a neutral example with no personal identity or tracking. The starter is initial project scaffolding; package updates supply the shared functionality afterward.
+
+## Compatibility and maintenance
+
+Astro 5–7 is the supported peer range. CI exercises packed neutral starter installations with Astro 5.18.2 and 7.3.2. See [the extraction and migration playbook](docs/playbook.md) for release ordering, provenance, and validation. Publish the validated packages first, verify krigsvoldtheme.dev on those registry releases, then migrate krigsvold.org. CI never publishes automatically.
