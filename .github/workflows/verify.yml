@@ -13,15 +13,24 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: krigsvoldtheme/npm
-          ref: a8f79e1aa34ce0e179627c0e810702e47fc95671
+          ref: f1af6e4ff9598c2b9cd6052617453a9bacb440f7
           path: .core
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
       - run: npm ci --ignore-scripts && npm run build && npm test
         working-directory: .core
+      - run: npm ci --ignore-scripts --legacy-peer-deps --no-audit --no-fund
       - run: npm test
+      - run: npx playwright install --with-deps chromium
       - run: node scripts/smoke.mjs
         env:
           KRIGSVOLD_CORE_SOURCE: .core
           KRIGSVOLD_ASTRO_VERSION: ${{ matrix.astro }}
+          KRIGSVOLD_BROWSER: 1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: layout-qa-${{ matrix.astro }}
+          path: artifacts/qa/
+          if-no-files-found: ignore
