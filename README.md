@@ -4,13 +4,11 @@
 
 ## Install
 
-Registry publication is pending. Pack both repositories, then install both archives together:
-
 ```sh
-npm install ./krigsvold-theme-2.0.0.tgz ./krigsvold-astro-1.0.0.tgz
+npm install @krigsvold/theme @krigsvold/astro
 ```
 
-After registry publication, use `npm install @krigsvold/theme @krigsvold/astro`. The GitHub organization is `krigsvoldtheme`; the npm scope is `krigsvold`.
+The GitHub organization is `krigsvoldtheme`; the npm scope is `krigsvold`.
 
 ## Use
 
@@ -35,8 +33,16 @@ Components also have direct exports such as `@krigsvold/astro/Container.astro`. 
 
 ## Starter
 
-Copy `starter/` to a new project. Until registry publication, install the two local archives before building. It contains a neutral example with no personal identity or tracking. The starter is initial project scaffolding; package updates supply the shared functionality afterward.
+Copy `starter/` to a new project. It contains a neutral example with no personal identity or tracking. The starter is initial project scaffolding; package updates supply the shared functionality afterward.
 
 ## Compatibility and maintenance
 
 Astro 5–7 is the supported peer range. CI exercises packed neutral starter installations with Astro 5.18.2 and 7.3.2. See [the extraction and migration playbook](docs/playbook.md) for release ordering, provenance, and validation. Publish the validated packages first, verify krigsvoldtheme.dev on those registry releases, then migrate krigsvold.org. CI never publishes automatically.
+
+## Layout system
+
+Version 1.1 adds `Stack`, `Cluster`, `Grid`, `Sidebar`, `Split`, `Section`, `PageHeader`, `SiteHeader`, `SiteFooter`, `ArticleLayout`, `LandingLayout`, and `DocumentationLayout`. These consume `@krigsvold/theme@^2.1.0`; visual defaults and structural CSS live in the core. See [layout contracts, source observations, and examples](docs/layouts.md). Existing components and Layout behavior remain available.
+
+## Releases
+
+Stable GitHub releases can publish automatically through npm trusted publishing. See [release setup](docs/releasing.md) for the one-time package authorization and release order.
