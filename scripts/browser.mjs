@@ -35,6 +35,11 @@ try{
  for(const mode of ['light','dark']){
   const band=page.locator(`.layout-lab[data-krigsvold="${mode}"]`);
   assert.equal(await band.locator('.probe-regular-space').evaluate(e=>getComputedStyle(e).gap), await band.locator('.probe-grid').evaluate(e=>getComputedStyle(e).gap), 'Regular nested spacing is independent of a compact parent');
+  const background=locator=>locator.evaluate(e=>getComputedStyle(e).backgroundColor);
+  assert.equal(await background(band.locator('.probe-source-enabled')),mode==='light'?'rgb(6, 19, 37)':'rgb(158, 213, 230)','Source action follows its closest appearance');
+  assert.equal(await background(band.locator('.probe-source-disabled')),await background(band.locator('.probe-baseline-disabled')),'Source profile preserves disabled material');
+  assert.equal(await background(band.locator('.probe-nested-enabled')),mode==='light'?'rgb(158, 213, 230)':'rgb(6, 19, 37)','Nested opposite appearance retains its own action role');
+  assert.notEqual(await background(band.locator('.probe-nested-disabled')),await background(band.locator('.probe-nested-enabled')),'Nested disabled remains distinct');
   const grid=band.locator('.probe-grid');assert.equal(await grid.evaluate(e=>getComputedStyle(e).display),'grid');
   const columns=await grid.evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length);assert.ok(columns>1&&columns<=3,'Bounded desktop columns');
   const nested=band.locator('.probe-nested');assert.equal(await nested.evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),1,'Nested grid wraps within its container');
