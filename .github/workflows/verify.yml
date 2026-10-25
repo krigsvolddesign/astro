@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: krigsvoldtheme/npm
-          ref: e1d77048df1c5b3ecfe5b214e3fda4f9fa4de259
+          ref: f567b51abbe199f89cbb09b5a8cb9e77bed1e117
           path: .core
       - uses: actions/setup-node@v4
         with:

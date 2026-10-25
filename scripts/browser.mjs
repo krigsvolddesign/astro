@@ -49,6 +49,7 @@ try{
  await page.setViewportSize({width:307,height:1000});await page.reload();
  const main=await page.locator('.probe-sidebar > .krigsvold-sidebar__main').first().boundingBox(),aside=await page.locator('.probe-sidebar > .krigsvold-sidebar__aside').first().boundingBox();assert.ok(aside.y>main.y,'Narrow sidebar follows main content');
  await page.setViewportSize({width:1600,height:1000});await page.goto(base+'/article/');
+ assert.equal(await page.locator('.krigsvold-page-header').evaluate(e=>getComputedStyle(e).borderBottomWidth),'0px','Opt-in source profile removes the actual page-header accent border');
  const contents=page.getByRole('navigation',{name:'On this page',exact:true});
  await page.screenshot({path:'artifacts/qa/article-desktop.png',fullPage:true});
  assert.equal(await contents.locator('ul ul li').count(),1,'Child section has a native nested list');
