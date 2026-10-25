@@ -35,6 +35,11 @@ try{
  for(const mode of ['light','dark']){
   const band=page.locator(`.layout-lab[data-krigsvold="${mode}"]`);
   assert.equal(await band.locator('.probe-regular-space').evaluate(e=>getComputedStyle(e).gap), await band.locator('.probe-grid').evaluate(e=>getComputedStyle(e).gap), 'Regular nested spacing is independent of a compact parent');
+  const background=locator=>locator.evaluate(e=>getComputedStyle(e).backgroundColor);
+  assert.equal(await background(band.locator('.probe-source-enabled')),mode==='light'?'rgb(6, 19, 37)':'rgb(158, 213, 230)','Source action follows its closest appearance');
+  assert.equal(await background(band.locator('.probe-source-disabled')),await background(band.locator('.probe-baseline-disabled')),'Source profile preserves disabled material');
+  assert.equal(await background(band.locator('.probe-nested-enabled')),mode==='light'?'rgb(158, 213, 230)':'rgb(6, 19, 37)','Nested opposite appearance retains its own action role');
+  assert.notEqual(await background(band.locator('.probe-nested-disabled')),await background(band.locator('.probe-nested-enabled')),'Nested disabled remains distinct');
   const grid=band.locator('.probe-grid');assert.equal(await grid.evaluate(e=>getComputedStyle(e).display),'grid');
   const columns=await grid.evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length);assert.ok(columns>1&&columns<=3,'Bounded desktop columns');
   const nested=band.locator('.probe-nested');assert.equal(await nested.evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),1,'Nested grid wraps within its container');
@@ -43,6 +48,22 @@ try{
  console.log('Capturing screenshot');await page.screenshot({timeout:15000,path:'artifacts/qa/layouts-desktop.png',fullPage:true});
  await page.setViewportSize({width:307,height:1000});await page.reload();
  const main=await page.locator('.probe-sidebar > .krigsvold-sidebar__main').first().boundingBox(),aside=await page.locator('.probe-sidebar > .krigsvold-sidebar__aside').first().boundingBox();assert.ok(aside.y>main.y,'Narrow sidebar follows main content');
+ await page.setViewportSize({width:1600,height:1000});await page.goto(base+'/article/');
+ const contents=page.getByRole('navigation',{name:'On this page',exact:true});
+ await page.screenshot({path:'artifacts/qa/article-desktop.png',fullPage:true});
+ assert.equal(await contents.locator('ul ul li').count(),1,'Child section has a native nested list');
+ assert.equal(await contents.locator(':scope > ul > li').count(),2,'Two parent sections');
+ const index=await contents.boundingBox(),body=await page.locator('.krigsvold-reading-layout__body').boundingBox();
+ assert.ok(index.x < body.x && Math.abs(index.y-body.y)<25,'Wide contents precedes prose in its own column');
+ assert.equal(await page.locator('.krigsvold-site-footer__groups nav').count(),4);
+ assert.equal(await page.locator('.krigsvold-site-footer--grouped').evaluate(e=>getComputedStyle(e).backgroundColor),'rgb(6, 19, 37)');
+ await page.locator('.krigsvold-site-footer--grouped').screenshot({path:'artifacts/qa/footer-desktop.png'});
+ await page.setViewportSize({width:320,height:1000});await page.reload();
+ const narrowIndex=await contents.boundingBox(),narrowBody=await page.locator('.krigsvold-reading-layout__body').boundingBox();
+ assert.ok(narrowIndex.y < narrowBody.y,'Narrow contents precedes body');await fits('Source profile and grouped footer at 320');
+ await contents.getByRole('link',{name:'A closer look',exact:true}).click();assert.ok(page.url().endsWith('#detail'));
+ await page.locator('.krigsvold-site-footer--grouped').screenshot({path:'artifacts/qa/footer-narrow.png'});
+ await page.setViewportSize({width:1280,height:1000});await page.reload();await page.evaluate(()=>document.documentElement.style.setProperty('font-size','400%','important'));await fits('Article at 400% text');
  await page.goto(base+'/article/');await page.keyboard.press('Tab');assert.ok(await page.locator('.krigsvold-skip-link').evaluate(e=>e===document.activeElement));
  await page.keyboard.press('Enter');assert.equal(await page.evaluate(()=>document.activeElement?.id),'main-content','Skip link moves focus into main content');
  await page.emulateMedia({reducedMotion:'reduce'});assert.equal(await page.evaluate(()=>getComputedStyle(document.documentElement).getPropertyValue('--krigsvold-motion-duration').trim()),'0s');
