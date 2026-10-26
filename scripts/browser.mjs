@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
-import { chromium } from 'playwright';
+import { chromium, firefox, webkit } from 'playwright';
+import { formChecks } from './form-checks.mjs';
 import { createServer } from 'node:http';
 import { readFile, mkdir } from 'node:fs/promises';
 import { resolve, extname, sep } from 'node:path';
@@ -11,7 +12,9 @@ const server=createServer(async(req,res)=>{
 });
 await new Promise(done=>server.listen(0,'127.0.0.1',done));
 const base=`http://127.0.0.1:${server.address().port}`;
-const browser=await chromium.launch({... (process.env.PLAYWRIGHT_EXECUTABLE_PATH ? {executablePath:process.env.PLAYWRIGHT_EXECUTABLE_PATH}:{}),args:['--no-sandbox','--disable-dev-shm-usage']});
+const browserName=process.env.DESIGN_BROWSER ?? 'chromium';
+assert.ok(['chromium','firefox','webkit'].includes(browserName));
+const browser=await ({chromium,firefox,webkit})[browserName].launch({... (browserName==='chromium' && process.env.PLAYWRIGHT_EXECUTABLE_PATH ? {executablePath:process.env.PLAYWRIGHT_EXECUTABLE_PATH}:{}),args:browserName==='chromium'?['--no-sandbox','--disable-dev-shm-usage']:[]});
 const context=await browser.newContext({javaScriptEnabled:false});
 const external=[];await context.route('**/*',route=>{if(route.request().url().startsWith(base+'/'))return route.continue();external.push(route.request().url());return route.abort();});
 const page=await context.newPage();
@@ -23,7 +26,7 @@ async function settledFonts(){
 async function fits(label){const detail=await page.evaluate(()=>({viewport:innerWidth,document:document.documentElement.scrollWidth,overflow:[...document.querySelectorAll('body *')].filter(e=>{const r=e.getBoundingClientRect();return r.width>0&&(r.right>innerWidth+1||r.left< -1)&&!e.closest('pre,.krigsvold-scroll')}).slice(0,8).map(e=>({tag:e.tagName,class:e.className,width:e.getBoundingClientRect().width,text:e.textContent?.slice(0,50)}))}));assert.ok(detail.document<=detail.viewport,label+' '+JSON.stringify(detail));}
 try{
  await mkdir('artifacts/qa',{recursive:true});
- for(const route of ['/','/article/','/documentation/','/layouts/']){
+ for(const route of ['/','/article/','/documentation/','/layouts/','/form/']){
   for(const width of [280,307,390,768,1280,1600]){
    console.log('Checking '+route+' at '+width);await page.setViewportSize({width,height:1000});await page.goto(base+route);await settledFonts();await fits(route+' at '+width);
    assert.equal(await page.locator('main').count(),1);assert.equal(await page.locator('h1').count(),1);
@@ -40,6 +43,7 @@ try{
   assert.equal(await background(band.locator('.probe-source-disabled')),await background(band.locator('.probe-baseline-disabled')),'Source profile preserves disabled material');
   assert.equal(await background(band.locator('.probe-nested-enabled')),mode==='light'?'rgb(158, 213, 230)':'rgb(6, 19, 37)','Nested opposite appearance retains its own action role');
   assert.notEqual(await background(band.locator('.probe-nested-disabled')),await background(band.locator('.probe-nested-enabled')),'Nested disabled remains distinct');
+  assert.equal(await background(band.locator('.probe-inherited-enabled')),mode==='light'?'rgb(158, 213, 230)':'rgb(6, 19, 37)','Nested appearance recomputes inherited source roles without repeating the profile class');
   const grid=band.locator('.probe-grid');assert.equal(await grid.evaluate(e=>getComputedStyle(e).display),'grid');
   const columns=await grid.evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length);assert.ok(columns>1&&columns<=3,'Bounded desktop columns');
   const nested=band.locator('.probe-nested');assert.equal(await nested.evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),1,'Nested grid wraps within its container');
@@ -56,6 +60,9 @@ try{
  assert.equal(await contents.locator(':scope > ul > li').count(),2,'Two parent sections');
  const index=await contents.boundingBox(),body=await page.locator('.krigsvold-reading-layout__body').boundingBox();
  assert.ok(index.x < body.x && Math.abs(index.y-body.y)<25,'Wide contents precedes prose in its own column');
+ const articleMain=await page.locator('.krigsvold-reading-layout__body .krigsvold-sidebar__main').boundingBox(), articleAside=await page.locator('.krigsvold-reading-layout__body .krigsvold-sidebar__aside').boundingBox();
+ assert.ok(Math.abs(articleMain.y-articleAside.y)<2 && articleAside.x>articleMain.x,'Supported article has an actual side-by-side supporting region');
+ assert.ok(articleMain.width<=await page.evaluate(()=>{const v=getComputedStyle(document.documentElement).getPropertyValue('--krigsvold-reading-width').trim();return parseFloat(v)*(v.endsWith('rem')?parseFloat(getComputedStyle(document.documentElement).fontSize):1);})+1,'Prose retains its reading measure');
  assert.equal(await page.locator('.krigsvold-site-footer__groups nav').count(),4);
  assert.equal(await page.locator('.krigsvold-site-footer--grouped').evaluate(e=>getComputedStyle(e).backgroundColor),'rgb(6, 19, 37)');
  await page.locator('.krigsvold-site-footer--grouped').screenshot({path:'artifacts/qa/footer-desktop.png'});
@@ -68,5 +75,6 @@ try{
  await page.goto(base+'/article/');await page.keyboard.press('Tab');assert.ok(await page.locator('.krigsvold-skip-link').evaluate(e=>e===document.activeElement));
  await page.keyboard.press('Enter');assert.equal(await page.evaluate(()=>document.activeElement?.id),'main-content','Skip link moves focus into main content');
  await page.emulateMedia({reducedMotion:'reduce'});assert.equal(await page.evaluate(()=>getComputedStyle(document.documentElement).getPropertyValue('--krigsvold-motion-duration').trim()),'0s');
+ await formChecks(browser,base);
  assert.deepEqual(external,[]);console.log('Layout browser checks passed: 4 routes, 6 widths, enlarged text, both modes, nested grids, source order, skip link, and reduced motion.');
 }finally{clearTimeout(watchdog);await context.close();await browser.close();await new Promise(done=>server.close(done));}
