@@ -5,7 +5,7 @@
 ## Install
 
 ```sh
-npm install @krigsvold/theme @krigsvold/astro
+npm install @krigsvold/theme@2.2.3 @krigsvold/astro@1.2.2
 ```
 
 The GitHub organization is `krigsvoldtheme`; the npm scope is `krigsvold`.
@@ -37,7 +37,7 @@ Obtain the shipped starter without a repository checkout:
 
 ```sh
 mkdir example && cd example
-npm pack @krigsvold/astro@next
+npm pack @krigsvold/astro@1.2.2
 # Extract the downloaded krigsvold-astro-*.tgz into this directory.
 tar -xzf krigsvold-astro-1.2.2.tgz
 cp -R package/starter/. .
