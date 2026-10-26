@@ -43,6 +43,7 @@ try{
   assert.equal(await background(band.locator('.probe-source-disabled')),await background(band.locator('.probe-baseline-disabled')),'Source profile preserves disabled material');
   assert.equal(await background(band.locator('.probe-nested-enabled')),mode==='light'?'rgb(158, 213, 230)':'rgb(6, 19, 37)','Nested opposite appearance retains its own action role');
   assert.notEqual(await background(band.locator('.probe-nested-disabled')),await background(band.locator('.probe-nested-enabled')),'Nested disabled remains distinct');
+  assert.equal(await background(band.locator('.probe-inherited-enabled')),mode==='light'?'rgb(158, 213, 230)':'rgb(6, 19, 37)','Nested appearance recomputes inherited source roles without repeating the profile class');
   const grid=band.locator('.probe-grid');assert.equal(await grid.evaluate(e=>getComputedStyle(e).display),'grid');
   const columns=await grid.evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length);assert.ok(columns>1&&columns<=3,'Bounded desktop columns');
   const nested=band.locator('.probe-nested');assert.equal(await nested.evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),1,'Nested grid wraps within its container');

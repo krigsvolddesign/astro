@@ -62,7 +62,7 @@ Stable GitHub releases can publish automatically through npm trusted publishing.
 
 ## Experimental UI language
 
-Astro 1.2.2 pairs with core ^2.2.2. [New contents/footer contracts and migration](docs/consolidation.md) are additive; existing slots, default footer, and supporting sidebar behavior remain available. The article starter exercises the additions.
+Astro 1.2.2 pairs with core ^2.2.3. [New contents/footer contracts and migration](docs/consolidation.md) are additive; existing slots, default footer, and supporting sidebar behavior remain available. The article starter exercises the additions.
 
 ## Forms
 

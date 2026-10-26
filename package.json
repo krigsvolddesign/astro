@@ -39,7 +39,7 @@
     "**/*.astro"
   ],
   "peerDependencies": {
-    "@krigsvold/theme": "^2.2.2",
+    "@krigsvold/theme": "^2.2.3",
     "astro": "^5.14.0 || ^6.0.0 || ^7.0.0"
   },
   "scripts": {
