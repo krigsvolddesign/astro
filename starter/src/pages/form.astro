@@ -1,0 +1,43 @@
+---
+import { Layout, SiteHeader, SiteFooter, Section, Stack, Button } from '@krigsvold/astro';
+import '@krigsvold/theme/source-profile.css';
+---
+<Layout title="Registration example" mainTabindex={-1} bodyClass="krigsvold-source-profile">
+  <SiteHeader slot="header" name="Example workshop" links={[{href:'/',label:'Home'},{href:'/form/',label:'Registration',current:true}]}><Button slot="actions" id="appearance" aria-pressed="false">Dark appearance</Button></SiteHeader>
+  <Section><Stack><h1>Workshop registration</h1><p class="krigsvold-eyebrow">A native HTML application extension</p>
+    <p>This example sends nothing and stores nothing durably. The first valid attempt fails deliberately; retry succeeds.</p>
+    <p><Button href="#registration" id="anchor-button">Go to the registration form</Button></p>
+    <form id="registration" class="krigsvold-form" aria-label="Workshop registration" novalidate>
+      <section id="summary" class="krigsvold-error-summary" role="alert" aria-labelledby="summary-title" tabindex="-1" hidden>
+        <h2 id="summary-title">Check your registration</h2><ul id="summary-errors"></ul>
+        <Button id="retry" hidden>Retry registration</Button>
+      </section>
+      <fieldset class="krigsvold-fieldset" id="details">
+        <legend>Your details</legend>
+        <div class="krigsvold-field">
+          <label for="name">Name (required)</label><input id="name" name="name" required autocomplete="name" aria-describedby="name-hint name-error" />
+          <p id="name-hint" class="krigsvold-hint">The name for your workshop registration.</p><p id="name-error" class="krigsvold-error" hidden>Enter your name.</p>
+        </div>
+        <div class="krigsvold-field">
+          <label for="email">Email (required)</label><input id="email" type="email" name="email" required autocomplete="email" aria-describedby="email-hint email-error" />
+          <p id="email-hint" class="krigsvold-hint">We would use this for registration details.</p><p id="email-error" class="krigsvold-error" hidden>Enter a valid email address.</p>
+        </div>
+      </fieldset>
+      <fieldset class="krigsvold-fieldset" id="attendance-group" tabindex="-1" aria-describedby="attendance-error">
+        <legend>Attendance (required)</legend>
+        <label class="krigsvold-radio"><input name="attendance" type="radio" value="studio" /><span>In the studio</span></label>
+        <label class="krigsvold-radio"><input name="attendance" type="radio" value="online" /><span>Online</span></label>
+        <p id="attendance-error" class="krigsvold-error" hidden>Choose how you will attend.</p>
+      </fieldset>
+      <fieldset class="krigsvold-fieldset"><legend>Preferences</legend>
+        <label class="krigsvold-checkbox"><input id="reminder" name="reminder" type="checkbox" /><span>Send a workshop reminder</span></label>
+        <div class="krigsvold-field"><label for="notes">Access requirements (optional)</label><textarea id="notes" name="notes" rows="3"></textarea></div>
+      </fieldset>
+      <div class="krigsvold-actions"><Button type="submit" id="submit">Register</Button><Button type="reset" id="reset" class="krigsvold-button--secondary">Reset registration</Button><Button id="default-button" class="krigsvold-button--quiet">Preview only</Button><Button disabled class="krigsvold-button--secondary" id="disabled-button">Unavailable</Button></div>
+      <p id="status" class="krigsvold-notice" role="status" aria-atomic="true">Not submitted.</p>
+    </form>
+    <dialog id="discard" class="krigsvold-dialog" aria-labelledby="discard-title"><form method="dialog"><h2 id="discard-title">Discard this registration?</h2><p>Your unsent entries will be cleared.</p><div class="krigsvold-actions"><Button type="submit" value="keep" autofocus>Keep editing</Button><Button type="submit" value="discard" class="krigsvold-button--secondary">Discard entries</Button></div></form></dialog>
+  </Stack></Section>
+  <SiteFooter slot="footer"><p>Example content. No registration service is connected.</p></SiteFooter>
+</Layout>
+<script>import '../scripts/form-demo.js';</script>

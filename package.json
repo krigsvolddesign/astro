@@ -1,6 +1,6 @@
 {
   "name": "@krigsvold/astro",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Reusable Astro layouts and components for the Krigsvold design system",
   "type": "module",
   "license": "MIT",
@@ -39,7 +39,7 @@
     "**/*.astro"
   ],
   "peerDependencies": {
-    "@krigsvold/theme": "^2.2.1",
+    "@krigsvold/theme": "^2.2.2",
     "astro": "^5.14.0 || ^6.0.0 || ^7.0.0"
   },
   "scripts": {
@@ -53,7 +53,7 @@
     "type": "git",
     "url": "git+https://github.com/krigsvoldtheme/astro.git"
   },
-  "homepage": "https://krigsvoldtheme.dev/",
+  "homepage": "https://krigsvolddesign.dev/",
   "keywords": [
     "astro",
     "astro-component",
@@ -62,6 +62,7 @@
     "design-system"
   ],
   "devDependencies": {
+    "@axe-core/playwright": "^4.11.1",
     "playwright": "1.64.1"
   }
 }

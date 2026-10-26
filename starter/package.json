@@ -8,8 +8,8 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@krigsvold/theme": "^2.2.1",
-    "@krigsvold/astro": "^1.2.1",
+    "@krigsvold/theme": "^2.2.2",
+    "@krigsvold/astro": "^1.2.2",
     "astro": "^7.3.2"
   }
 }

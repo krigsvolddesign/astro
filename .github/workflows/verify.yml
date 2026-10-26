@@ -12,12 +12,13 @@ jobs:
     strategy:
       matrix:
         astro: ['5.18.2', '7.3.2']
+        browser: [chromium, firefox, webkit]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/checkout@v4
         with:
           repository: krigsvoldtheme/npm
-          ref: f567b51abbe199f89cbb09b5a8cb9e77bed1e117
+          ref: cb1ed336f4fb0204735ca4751d2928d0bdeb2501
           path: .core
       - uses: actions/setup-node@v4
         with:
@@ -26,15 +27,16 @@ jobs:
         working-directory: .core
       - run: npm ci --ignore-scripts --legacy-peer-deps --no-audit --no-fund
       - run: npm test
-      - run: npx playwright install --with-deps chromium
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
       - run: node scripts/smoke.mjs
         env:
           KRIGSVOLD_CORE_SOURCE: .core
           KRIGSVOLD_ASTRO_VERSION: ${{ matrix.astro }}
           KRIGSVOLD_BROWSER: 1
+          DESIGN_BROWSER: ${{ matrix.browser }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: layout-qa-${{ matrix.astro }}
+          name: layout-qa-${{ matrix.astro }}-${{ matrix.browser }}
           path: artifacts/qa/
           if-no-files-found: ignore
