@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
 import assert from 'node:assert/strict';
 const root=fileURLToPath(new URL('../',import.meta.url));
-if(!process.env.KRIGSVOLD_CORE_SOURCE)throw new Error('Set KRIGSVOLD_CORE_SOURCE to a built krigsvoldtheme/npm checkout.');
+if(!process.env.KRIGSVOLD_CORE_SOURCE)throw new Error('Set KRIGSVOLD_CORE_SOURCE to a built krigsvolddesign/core checkout.');
 const core=resolve(process.env.KRIGSVOLD_CORE_SOURCE);
 const temp=await mkdtemp(join(tmpdir(),'krigsvold-packed-'));
 try {
@@ -14,7 +14,7 @@ try {
   const site=join(temp,'site');await cp(join(root,'starter'),site,{recursive:true});await mkdir(join(site,'vendor'));
   for(const archive of [coreArchive,astroArchive])await cp(join(temp,archive),join(site,'vendor',archive));
   const pkg=JSON.parse(await readFile(join(site,'package.json'),'utf8'));
-  pkg.dependencies['@krigsvold/theme']='file:vendor/'+coreArchive;
+  pkg.dependencies['@krigsvold/core']='file:vendor/'+coreArchive;
   pkg.dependencies['@krigsvold/astro']='file:vendor/'+astroArchive;
   if(process.env.KRIGSVOLD_ASTRO_VERSION)pkg.dependencies.astro=process.env.KRIGSVOLD_ASTRO_VERSION;
   await writeFile(join(site,'package.json'),JSON.stringify(pkg,null,2)+'\n');
@@ -54,5 +54,9 @@ try {
   const guide=await readFile(join(site,'dist/documentation/index.html'),'utf8');
   assert.ok(guide.indexOf('krigsvold-sidebar__aside')<guide.indexOf('krigsvold-sidebar__main'));
   if(process.env.KRIGSVOLD_BROWSER === '1') execFileSync(process.execPath,[join(root,'scripts/browser.mjs'),join(site,'dist')],{cwd:root,stdio:'inherit',timeout:210000});
+  // A host may install this starter beneath a prefix; test its emitted internal URLs.
+  await writeFile(join(site,'astro.config.mjs'), "import { defineConfig } from 'astro/config'; export default defineConfig({base:'/preview'});\n");
+  execFileSync('npm',['run','build'],{cwd:site,stdio:'inherit',timeout:180000});
+  execFileSync(process.execPath,[join(root,'scripts/subpath-check.mjs'),join(site,'dist')],{cwd:root,stdio:'inherit',timeout:30000});
   console.log('Packed starter build passed: both modes, all font roles, local font assets, and native button behavior.');
 } finally { if (!process.env.KRIGSVOLD_KEEP_FIXTURE) await rm(temp,{recursive:true,force:true}); }

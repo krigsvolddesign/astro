@@ -1,11 +1,13 @@
 # Krigsvold for Astro
 
-`@krigsvold/astro` provides reusable Astro layouts and components. The framework-independent [`@krigsvold/theme`](https://github.com/krigsvoldtheme/npm) package owns the design definitions and font roles, extracted from krigsvold.org. Astro adds composition, never a competing palette.
+> **Unpublished migration candidate:** this private Astro 2.0.0 preview requires the unpublished local `@krigsvold/core` artifact. Existing `@krigsvold/astro@1.2.2` and `@krigsvold/theme` remain supported separately. No registry release is implied.
+
+`@krigsvold/astro` provides reusable Astro layouts and components. The framework-independent [`@krigsvold/core`](https://github.com/krigsvolddesign/core) package owns the design definitions and font roles, extracted from krigsvold.org. Astro adds composition, never a competing palette.
 
 ## Install
 
 ```sh
-npm install @krigsvold/theme@2.2.3 @krigsvold/astro@1.2.2
+npm install ./PATH-TO-krigsvold-core.tgz ./PATH-TO-krigsvold-astro.tgz astro
 ```
 
 The GitHub organization is `krigsvoldtheme`; the npm scope is `krigsvold`.
@@ -54,7 +56,7 @@ Astro 5–7 is the supported peer range. CI exercises packed neutral starter ins
 
 ## Layout system
 
-Version 1.1 adds `Stack`, `Cluster`, `Grid`, `Sidebar`, `Split`, `Section`, `PageHeader`, `SiteHeader`, `SiteFooter`, `ArticleLayout`, `LandingLayout`, and `DocumentationLayout`. These consume `@krigsvold/theme@^2.1.0`; visual defaults and structural CSS live in the core. See [layout contracts, source observations, and examples](docs/layouts.md). Existing components and Layout behavior remain available.
+Version 1.1 adds `Stack`, `Cluster`, `Grid`, `Sidebar`, `Split`, `Section`, `PageHeader`, `SiteHeader`, `SiteFooter`, `ArticleLayout`, `LandingLayout`, and `DocumentationLayout`. The historical 1.1 release consumed `@krigsvold/theme@^2.1.0`; visual defaults and structural CSS live in the core. See [layout contracts, source observations, and examples](docs/layouts.md). Existing components and Layout behavior remain available.
 
 ## Releases
 
@@ -66,4 +68,4 @@ Astro 1.2.2 pairs with core ^2.2.3. [New contents/footer contracts and migration
 
 ## Forms
 
-The starter `/form/` demonstrates native HTML with supported core form classes, explicit submit/reset types, validation, retained input, simulated failure/retry, and a changed-reset dialog. Nothing is sent or stored durably. Core owns the appearance; the small controller is host example code, not a new Astro API. See the core [form styling contract](https://github.com/krigsvoldtheme/npm/blob/main/docs/form-styling.md). A `Button` accepts `type="submit"`, `type="reset"`, or its default `type="button"` without duplicate attributes; modifiers use `class="krigsvold-button--secondary"`.
+The starter `/form/` demonstrates native HTML with supported core form classes, explicit submit/reset types, validation, retained input, simulated failure/retry, and a changed-reset dialog. Nothing is sent or stored durably. Its local controls start disabled and are enabled only after initialization completes. If JavaScript is disabled, blocked, or fails during setup, an unavailable message remains visible and values cannot be submitted to the hosting server. Core owns the appearance; the small controller is host example code, not a new Astro API. See the core [form styling contract](https://github.com/krigsvolddesign/core/blob/main/docs/form-styling.md). A `Button` accepts `type="submit"`, `type="reset"`, or its default `type="button"` without duplicate attributes; modifiers use `class="krigsvold-button--secondary"`.
