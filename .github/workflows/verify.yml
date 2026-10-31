@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: krigsvolddesign/core
-          ref: 4e6b49131ebc9035796906e7c075e4cf50256e29
+          ref: 2675078f5fb292920f927b088b87d267dab99701
           path: .core
       - uses: actions/setup-node@v4
         with:
