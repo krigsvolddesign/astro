@@ -10,7 +10,7 @@
   "dependencies": {
     "@krigsvold/astro": "^2.0.0",
     "astro": "^7.3.2",
-    "@krigsvold/core": "^2.2.3",
+    "@krigsvold/core": "^2.2.4",
     "markdown-it": "14.3.3",
     "markdown-it-footnote": "4.0.0",
     "sanitize-html": "2.18.1"
