@@ -5,21 +5,22 @@ import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
 import assert from 'node:assert/strict';
 const root=fileURLToPath(new URL('../',import.meta.url));
-if(!process.env.KRIGSVOLD_CORE_SOURCE)throw new Error('Set KRIGSVOLD_CORE_SOURCE to a built krigsvoldtheme/npm checkout.');
-const core=resolve(process.env.KRIGSVOLD_CORE_SOURCE);
+const core=process.env.KRIGSVOLD_CORE_SOURCE?resolve(process.env.KRIGSVOLD_CORE_SOURCE):null;
+const pin=JSON.parse(await readFile(join(root,'docs-release-lock.json'),'utf8'));
 const temp=await mkdtemp(join(tmpdir(),'krigsvold-packed-'));
 try {
   const pack=cwd=>JSON.parse(execFileSync('npm',['pack','--ignore-scripts','--json','--pack-destination',temp],{cwd,encoding:'utf8',stdio:['ignore','pipe','inherit']}))[0].filename;
-  const coreArchive=pack(core),astroArchive=pack(root);
+  const coreArchive=core?pack(core):null,astroArchive=pack(root);
   const site=join(temp,'site');await cp(join(root,'starter'),site,{recursive:true});await mkdir(join(site,'vendor'));
-  for(const archive of [coreArchive,astroArchive])await cp(join(temp,archive),join(site,'vendor',archive));
+  for(const archive of [coreArchive,astroArchive].filter(Boolean))await cp(join(temp,archive),join(site,'vendor',archive));
   const pkg=JSON.parse(await readFile(join(site,'package.json'),'utf8'));
-  pkg.dependencies['@krigsvold/theme']='file:vendor/'+coreArchive;
+  pkg.dependencies['@krigsvold/core']=core?'file:vendor/'+coreArchive:pin.core.version;
   pkg.dependencies['@krigsvold/astro']='file:vendor/'+astroArchive;
   if(process.env.KRIGSVOLD_ASTRO_VERSION)pkg.dependencies.astro=process.env.KRIGSVOLD_ASTRO_VERSION;
   await writeFile(join(site,'package.json'),JSON.stringify(pkg,null,2)+'\n');
   execFileSync('npm',['install','--ignore-scripts','--no-audit','--no-fund'],{cwd:site,stdio:'inherit',timeout:180000});
-  execFileSync('npm',['run','build'],{cwd:site,stdio:'inherit',timeout:180000});
+  if(!core){const lock=JSON.parse(await readFile(join(site,'package-lock.json'),'utf8')),installed=lock.packages?.[`node_modules/${pin.core.name}`];assert.equal(installed?.version,pin.core.version);assert.equal(installed?.integrity,pin.core.integrity);}
+  execFileSync('npm',['run','build'],{cwd:site,stdio:'inherit',timeout:180000,env:{...process.env,NIGHTJAR_FAMILY:'krigsvold',NIGHTJAR_BASE:'/'}});
   const html=await readFile(join(site,'dist/index.html'),'utf8');
   assert.match(html,/data-krigsvold="light"/);assert.match(html,/data-krigsvold="dark"/);
   assert.match(html,/id="main-content"/);assert.match(html,/type="button"[^>]*disabled|disabled[^>]*type="button"/);
@@ -54,5 +55,10 @@ try {
   const guide=await readFile(join(site,'dist/documentation/index.html'),'utf8');
   assert.ok(guide.indexOf('krigsvold-sidebar__aside')<guide.indexOf('krigsvold-sidebar__main'));
   if(process.env.KRIGSVOLD_BROWSER === '1') execFileSync(process.execPath,[join(root,'scripts/browser.mjs'),join(site,'dist')],{cwd:root,stdio:'inherit',timeout:210000});
+  if(process.env.KRIGSVOLD_BROWSER === '1') execFileSync(process.execPath,[join(root,'scripts/dashboard-resize-check.mjs'),join(site,'dist'),'/'],{cwd:root,stdio:'inherit',timeout:70000});
+  // A host may install this starter beneath a prefix; test its emitted internal URLs.
+  execFileSync('npm',['run','build'],{cwd:site,stdio:'inherit',timeout:180000,env:{...process.env,NIGHTJAR_FAMILY:'krigsvold',NIGHTJAR_BASE:'/preview/'}});
+  execFileSync(process.execPath,[join(root,'scripts/subpath-check.mjs'),join(site,'dist')],{cwd:root,stdio:'inherit',timeout:30000});
+  if(process.env.KRIGSVOLD_BROWSER === '1') execFileSync(process.execPath,[join(root,'scripts/dashboard-resize-check.mjs'),join(site,'dist'),'/preview/'],{cwd:root,stdio:'inherit',timeout:70000});
   console.log('Packed starter build passed: both modes, all font roles, local font assets, and native button behavior.');
 } finally { if (!process.env.KRIGSVOLD_KEEP_FIXTURE) await rm(temp,{recursive:true,force:true}); }
