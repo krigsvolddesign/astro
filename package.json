@@ -1,6 +1,6 @@
 {
   "name": "@krigsvold/astro",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Reusable Astro layouts and components for the Krigsvold design system",
   "type": "module",
   "license": "MIT",
@@ -40,7 +40,7 @@
   ],
   "peerDependencies": {
     "astro": "^5.14.0 || ^6.0.0 || ^7.0.0",
-    "@krigsvold/core": "^2.2.4"
+    "@krigsvold/core": "^2.2.5"
   },
   "scripts": {
     "test": "node --test tests/*.test.mjs",

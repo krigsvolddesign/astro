@@ -2,9 +2,9 @@
 
 | Repository | Responsibility |
 | --- | --- |
-| krigsvoldtheme/npm | Canonical source.json, framework-independent design tokens, fonts, optional styles and host capabilities |
-| krigsvoldtheme/astro | Astro components and neutral starter, consuming the core peer dependency |
-| krigsvoldtheme/krigsvoldtheme | Theme demonstration, downloads, and application port generators |
+| krigsvolddesign/core | Canonical source.json, framework-independent design tokens, fonts, optional styles and host capabilities |
+| krigsvolddesign/astro | Astro components and neutral starter, consuming the core peer dependency |
+| krigsvolddesign/core | Theme demonstration, downloads, and application port generators |
 | basuhoward/krigsvold.org | Originating site, content, identity, navigation, metadata, consent and analytics |
 
 ## Source
@@ -30,3 +30,7 @@ Only after the first consumer passes that gate, begin the Jekyll-to-Astro migrat
 ## Versioning
 
 Each npm package uses independent semantic versions. Patch fixes preserve the contract; minor releases add compatible features; breaking token/component behavior requires a major release. Consumers pin deliberate releases and lockfile integrity, rather than a moving Git branch or CDN latest URL.
+
+## Current publication authority
+
+The Core integration shipped in Astro 2.0.0. Local tarballs remain useful for candidate verification; they are not required for ordinary installation. Keep original extraction decisions above as historical rationale. Use the [current release procedure](releasing.md) and canonical GitFlow acceptance; do not reconstruct historical reviews or CI in deployment.
