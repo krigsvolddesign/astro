@@ -1,6 +1,6 @@
 # Krigsvold for Astro
 
-`@krigsvold/astro` 2.x integrates the independently published `@krigsvold/core` package. Version 2.0.0 is already available from npm; this source prepares the compatible 2.0.1 maintenance release.
+`@krigsvold/astro` 2.x integrates the independently published `@krigsvold/core` package. Version 2.0.2 corrects the shipped starter and native reference site to follow the accepted Krigsvold Jekyll visual baseline while retaining the existing component APIs.
 
 `@krigsvold/astro` provides reusable Astro layouts and components. The framework-independent [`@krigsvold/core`](https://github.com/krigsvolddesign/core) package owns the design definitions and font roles, extracted from krigsvold.org. Astro adds composition, never a competing palette.
 
@@ -39,16 +39,16 @@ Obtain the matching shipped starter without a repository checkout after verifyin
 
 ```sh
 mkdir example && cd example
-npm pack @krigsvold/astro@2.0.1
+npm pack @krigsvold/astro@2.0.2
 # Extract the downloaded krigsvold-astro-*.tgz into this directory.
-tar -xzf krigsvold-astro-2.0.1.tgz
+tar -xzf krigsvold-astro-2.0.2.tgz
 cp -R package/starter/. .
 rm -rf package
 npm install
 npm run dev
 ```
 
-Alternatively copy `node_modules/@krigsvold/astro/starter/` from an existing installation. It contains a neutral example with no personal identity or tracking. The starter is initial project scaffolding; package updates supply the shared functionality afterward.
+Alternatively copy `node_modules/@krigsvold/astro/starter/` from an existing installation. It demonstrates the Krigsvold family’s canonical header, navigation, typography, hero tiers, approved imagery, and footer using native Astro components. Replace the example identity and content for your own site, and retain the supplied image attribution when reusing the artwork. The starter is initial project scaffolding; package updates supply the shared functionality afterward.
 
 ## Compatibility and maintenance
 
@@ -64,7 +64,7 @@ npm publication uses the existing stage-only trusted publisher and an explicit n
 
 ## Experimental UI language
 
-The 1.2.x line historically used `@krigsvold/theme`. Astro 2.0.1 requires `@krigsvold/core@^2.2.5`; existing component APIs and slots remain available. [New contents/footer contracts and migration](docs/consolidation.md) are additive; existing slots, default footer, and supporting sidebar behavior remain available. The article starter exercises the additions.
+The 1.2.x line historically used `@krigsvold/theme`. Astro 2.0.2 requires `@krigsvold/core@^2.2.5`; existing component APIs and slots remain available. [New contents/footer contracts and migration](docs/consolidation.md) are additive; existing slots, default footer, and supporting sidebar behavior remain available. The article starter exercises the additions.
 
 ## Forms
 

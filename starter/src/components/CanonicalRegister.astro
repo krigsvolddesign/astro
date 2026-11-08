@@ -1,0 +1,18 @@
+---
+import {renderMarkdown} from '../markdown.mjs';
+const {page,base} = Astro.props;
+// Native krigsvold composition from krigsvolddesign/jekyll 25dd494485759fc5b62022941b5e2c41505c2993.
+function releaseFields(title:string) {
+ const parts=title.split(' · ');
+ if(parts.length!==2)return null;
+ const match=/^(January|February|March|April|May|June|July|August|September|October|November|December) (\d{1,2}), (\d{4})$/.exec(parts[1]);
+ if(!match)return null;
+ const month=['January','February','March','April','May','June','July','August','September','October','November','December'].indexOf(match[1]);
+ const day=Number(match[2]),year=Number(match[3]),date=new Date(Date.UTC(year,month,day));
+ if(date.getUTCFullYear()!==year||date.getUTCMonth()!==month||date.getUTCDate()!==day)return null;
+ return {version:parts[0],label:parts[1],iso:date.toISOString().slice(0,10)};
+}
+---
+{page.id==='changelog'&&(<div class="example-release-register">{page.sections.map(section=>{const date=releaseFields(section.title);return <section class="example-section example-release" aria-labelledby={section.id}><header class="example-release__scope"><h2 id={section.id}>{date?<Fragment><span class="example-release__version">{date.version}</span><span class="example-release__separator"> · </span><time datetime={date.iso}>{date.label}</time></Fragment>:section.title}</h2></header><div class="example-section__body"><div class="example-prose" set:html={renderMarkdown(section.body,base,{docId:page.id+'-'+section.id})}/></div></section>})}</div>)}
+{page.id==='dashboard-components'&&(<div class="example-component-register">{page.sections.map(section=><section class="example-section example-component-register__entry" aria-labelledby={section.id}><header class="example-component-register__scope"><h2 id={section.id}>{section.title}</h2></header><div class="example-section__body"><div class="example-prose" set:html={renderMarkdown(section.body,base,{docId:page.id+'-'+section.id})}/></div></section>)}</div>)}
+
