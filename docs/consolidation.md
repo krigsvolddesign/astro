@@ -12,9 +12,9 @@ Import `@krigsvold/core/source-profile.css` after the regular core styles. Apply
 
 ## Content and footer anatomy
 
-Use TableOfContents with `items` containing `href`, `label`, and optional `depth: 2 | 3`; the default depth is 2. A depth-3 item requires a preceding depth-2 parent. Native nested lists retain parent/child semantics. `variant="index"` belongs in ArticleLayout's `contents` slot. `variant="inline"` is an in-body alternative. Localize `label` explicitly.
+Use TableOfContents with `items` containing `href`, `label`, and optional `depth: 2 | 3`; the default depth is 2. A depth-3 item requires a preceding depth-2 parent. Native nested lists retain parent/child semantics. The default variant is `inline`. Supply contents explicitly in ArticleLayout's or DocumentationLayout's `contents` slot, or render the component in the prose; neither layout generates contents automatically. Localize `label` explicitly.
 
-ArticleLayout retains its existing `sidebar` slot and end-side supporting region. Its new `contents` slot precedes the body; supporting material still follows the body. DocumentationLayout's existing `navigation` slot is unchanged. A TOC does not make every page require a left rail.
+ArticleLayout retains its existing `sidebar` slot and end-side supporting region. Its optional `contents` slot sits inline above the prose in the reading column; supporting material still follows the body. DocumentationLayout also accepts optional inline `contents` while its existing `navigation` slot retains a genuine site-navigation sidebar. A TOC never creates a margin rail.
 
 SiteFooter defaults to the existing plain rendering. `variant="grouped"` accepts `groups: {label, links: {href, label}[]}[]`, plus `identity` and `base` slots. Existing `links`, `navigationLabel`, class and default slot remain supported in either variant. The host supplies its own mark, ownership, contact, translated group names and destinations. Krigsvold uses a wide identity column plus four groups and an independent base row; fewer or more groups wrap within that region.
 

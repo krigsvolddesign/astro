@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.0.3
+
+- Keep native component-demo mastheads below navigation and their metadata legible on the inverse header.
+
+- Make reference-page contents navigation opt-in, with no automatically inserted TOC by default.
+- Render explicitly supplied contents inline above the prose in `ArticleLayout` and `DocumentationLayout`; default `TableOfContents` to its inline variant.
+- Preserve authored section links, component slots, supporting sidebars, and the separate documentation site-navigation sidebar.
+- Use a single native contents navigation when explicitly enabled, avoiding nested wrappers and duplicate borders.
+
 ## 2.0.2
 
 - Replace the generic starter shell with native Astro compositions following the accepted Krigsvold Jekyll visual baseline.

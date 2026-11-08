@@ -1,6 +1,6 @@
 # Krigsvold for Astro
 
-`@krigsvold/astro` 2.x integrates the independently published `@krigsvold/core` package. Version 2.0.2 corrects the shipped starter and native reference site to follow the accepted Krigsvold Jekyll visual baseline while retaining the existing component APIs.
+`@krigsvold/astro` 2.x integrates the independently published `@krigsvold/core` package. Version 2.0.3 makes contents navigation optional and inline in the shipped starter, native reference site, and reading layouts, retaining the Krigsvold visual language and existing component slots.
 
 `@krigsvold/astro` provides reusable Astro layouts and components. The framework-independent [`@krigsvold/core`](https://github.com/krigsvolddesign/core) package owns the design definitions and font roles, extracted from krigsvold.org. Astro adds composition, never a competing palette.
 
@@ -33,15 +33,17 @@ Components also have direct exports such as `@krigsvold/astro/Container.astro`. 
 
 `Container` supports content, reading, and archive widths. `SectionHeading` supports h2/h3, alignment, eyebrow, description, class hooks, and a divider slot. `Card` is an article wrapper. `Button` accepts native anchor/button attributes and defaults buttons to `type="button"`.
 
+Contents navigation is opt-in. Pass an explicitly authored `TableOfContents` to the `contents` slot of `ArticleLayout` or `DocumentationLayout`, or place it directly in the prose. It stays inline above the reading content, and the default variant is `inline`; these layouts do not scan headings or insert a TOC automatically. `DocumentationLayout` keeps its separate `navigation` slot for a genuine site-navigation sidebar, and `ArticleLayout` retains its supporting `sidebar` slot.
+
 ## Starter
 
 Obtain the matching shipped starter without a repository checkout after verifying the version is available from npm:
 
 ```sh
 mkdir example && cd example
-npm pack @krigsvold/astro@2.0.2
+npm pack @krigsvold/astro@2.0.3
 # Extract the downloaded krigsvold-astro-*.tgz into this directory.
-tar -xzf krigsvold-astro-2.0.2.tgz
+tar -xzf krigsvold-astro-2.0.3.tgz
 cp -R package/starter/. .
 rm -rf package
 npm install
@@ -64,7 +66,7 @@ npm publication uses the existing stage-only trusted publisher and an explicit n
 
 ## Experimental UI language
 
-The 1.2.x line historically used `@krigsvold/theme`. Astro 2.0.2 requires `@krigsvold/core@^2.2.5`; existing component APIs and slots remain available. [New contents/footer contracts and migration](docs/consolidation.md) are additive; existing slots, default footer, and supporting sidebar behavior remain available. The article starter exercises the additions.
+The 1.2.x line historically used `@krigsvold/theme`. Astro 2.0.3 requires `@krigsvold/core@^2.2.5`; existing component APIs and slots remain available. [New contents/footer contracts and migration](docs/consolidation.md) are additive; existing slots, default footer, and supporting sidebar behavior remain available. The article starter exercises the additions.
 
 ## Forms
 
@@ -73,3 +75,5 @@ The starter `/form/` demonstrates native HTML with supported core form classes, 
 ## Reference delivery
 
 The starter includes all 50 canonical examples, three dashboards, and a separate scientific workspace. These are explicitly simulated host applications, not exported Astro controllers. See [native Cloudflare delivery](docs/deployment.md) for source identity, integrity, previews, and rollback.
+
+The stock article and documentation demos set `show_toc = false`. Authors may explicitly enable their manual contents specimen; it remains inline above the reading content.
