@@ -1,6 +1,6 @@
 # Krigsvold for Astro
 
-`@krigsvold/astro` 2.x integrates the independently published `@krigsvold/core` package. Version 2.0.6 makes contents navigation optional and inline in the shipped starter, native reference site, and reading layouts, retaining the Krigsvold visual language and existing component slots.
+`@krigsvold/astro` 2.x integrates the independently published `@krigsvold/core` package. Version 2.0.6 makes contents navigation optional and inline in the reference app, and reading layouts, retaining the Krigsvold visual language and existing component slots.
 
 `@krigsvold/astro` provides reusable Astro layouts and components. The framework-independent [`@krigsvold/core`](https://github.com/krigsvolddesign/core) package owns the design definitions and font roles, extracted from krigsvold.org. Astro adds composition, never a competing palette.
 
@@ -35,22 +35,18 @@ Components also have direct exports such as `@krigsvold/astro/Container.astro`. 
 
 Contents navigation is opt-in. Pass an explicitly authored `TableOfContents` to the `contents` slot of `ArticleLayout` or `DocumentationLayout`, or place it directly in the prose. It stays inline above the reading content, and the default variant is `inline`; these layouts do not scan headings or insert a TOC automatically. `DocumentationLayout` keeps its separate `navigation` slot for a genuine site-navigation sidebar, and `ArticleLayout` retains its supporting `sidebar` slot.
 
-## Starter
+## Reference and starter
 
-Obtain the matching shipped starter without a repository checkout after verifying the version is available from npm:
+The complete [Astro reference application](reference/) lives in this repository alongside the components. It has its own npm manifest and lockfile and consumes published `@krigsvold/astro` and `@krigsvold/core` versions. It is excluded from the npm package.
 
 ```sh
-mkdir example && cd example
-npm pack @krigsvold/astro@2.0.6
-# Extract the downloaded krigsvold-astro-*.tgz into this directory.
-tar -xzf krigsvold-astro-2.0.6.tgz
-cp -R package/starter/. .
-rm -rf package
-npm install
+cd reference
+npm ci
 npm run dev
+npm run build
 ```
 
-Alternatively copy `node_modules/@krigsvold/astro/starter/` from an existing installation. It demonstrates the Krigsvold family’s canonical header, navigation, typography, hero tiers, approved imagery, and footer using native Astro components. Replace the example identity and content for your own site, and retain the supplied image attribution when reusing the artwork. The starter is initial project scaffolding; package updates supply the shared functionality afterward.
+To begin a new site, clone the separate [krigsvolddesign/astro-starter](https://github.com/krigsvolddesign/astro-starter) repository. The starter is no longer embedded in this package; existing projects do not need to be recreated. See [migration and hosting](docs/deployment.md).
 
 ## Compatibility and maintenance
 
@@ -66,14 +62,14 @@ npm publication uses the existing stage-only trusted publisher and an explicit n
 
 ## Experimental UI language
 
-The 1.2.x line historically used `@krigsvold/theme`. Astro 2.0.6 requires `@krigsvold/core@^2.2.5`; existing component APIs and slots remain available. [New contents/footer contracts and migration](docs/consolidation.md) are additive; existing slots, default footer, and supporting sidebar behavior remain available. The article starter exercises the additions.
+The 1.2.x line historically used `@krigsvold/theme`. Astro 2.0.6 requires `@krigsvold/core@^2.2.5`; existing component APIs and slots remain available. [New contents/footer contracts and migration](docs/consolidation.md) are additive; existing slots, default footer, and supporting sidebar behavior remain available. The reference article exercises the additions.
 
 ## Forms
 
-The starter `/form/` demonstrates native HTML with supported core form classes, explicit submit/reset types, validation, retained input, simulated failure/retry, and a changed-reset dialog. Nothing is sent or stored durably. Its local controls start disabled and are enabled only after initialization completes. If JavaScript is disabled, blocked, or fails during setup, an unavailable message remains visible and values cannot be submitted to the hosting server. Core owns the appearance; the small controller is host example code, not a new Astro API. See the core [form styling contract](https://github.com/krigsvolddesign/core/blob/main/docs/form-styling.md). A `Button` accepts `type="submit"`, `type="reset"`, or its default `type="button"` without duplicate attributes; modifiers use `class="krigsvold-button--secondary"`.
+The reference `/form/` demonstrates native HTML with supported core form classes, explicit submit/reset types, validation, retained input, simulated failure/retry, and a changed-reset dialog. Nothing is sent or stored durably. Its local controls start disabled and are enabled only after initialization completes. If JavaScript is disabled, blocked, or fails during setup, an unavailable message remains visible and values cannot be submitted to the hosting server. Core owns the appearance; the small controller is host example code, not a new Astro API. See the core [form styling contract](https://github.com/krigsvolddesign/core/blob/main/docs/form-styling.md). A `Button` accepts `type="submit"`, `type="reset"`, or its default `type="button"` without duplicate attributes; modifiers use `class="krigsvold-button--secondary"`.
 
 ## Reference delivery
 
-The starter includes all 50 canonical examples, three dashboards, and a separate scientific workspace. These are explicitly simulated host applications, not exported Astro controllers. See [native Cloudflare delivery](docs/deployment.md) for source identity, integrity, previews, and rollback.
+The reference includes all 50 canonical examples, three dashboards, and a separate scientific workspace. These are explicitly simulated host applications, not exported Astro controllers. See [standard Astro hosting](docs/deployment.md).
 
 The stock article and documentation demos set `show_toc = false`. Authors may explicitly enable their manual contents specimen; it remains inline above the reading content.

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 
 test('legacy Astro search styling does not override Core control appearance', async () => {
-  const shell = await readFile(new URL('../starter/public/assets/css/shell.css', import.meta.url), 'utf8');
+  const shell = await readFile(new URL('../reference/public/assets/css/shell.css', import.meta.url), 'utf8');
   const rule = shell.match(/\.site-search-input\s*\{([^}]*)\}/);
   assert.ok(rule, 'the host search layout hook must still exist');
   assert.match(rule[1], /\bmargin\s*:/, 'the host may retain search layout spacing');
