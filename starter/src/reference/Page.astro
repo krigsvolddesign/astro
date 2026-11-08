@@ -23,3 +23,6 @@ const variant=page.dashboard?'plain':page.heroVariant||'compact';
  <Footer slot="footer" href={href}/>
  <script slot="body-end" is:inline src={href('/assets/js/shell.js')} defer></script>
 </Layout>
+<style is:global>
+ .krigsvold .editorial-content :is(h1,h2,h3) { text-wrap:wrap; }
+</style>
