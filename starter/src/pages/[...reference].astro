@@ -7,4 +7,4 @@ export function getStaticPaths(){return documents.map(page=>({params:{reference:
 const {page}=Astro.props;
 const html=referenceHeadingAnchors(renderMarkdown(page.body,import.meta.env.BASE_URL),page.toc);
 ---
-<Page page={page} current={`/${page.path}/`}><section class="section"><div class="container jekyll-document">{page.toc&&<aside class="page-index"><nav class="toc" aria-label="On this page"><strong>On this page</strong><ul>{page.toc.map(item=><li><a href={`#${item.id}`}>{item.title}</a></li>)}</ul></nav></aside>}<article class="content editorial-content" set:html={html}/></div></section></Page>
+<Page page={page} current={`/${page.path}/`}><section class="section"><div class="container jekyll-document">{page.toc&&<nav class="page-index" aria-label="On this page"><p class="eyebrow">On this page</p><ul>{page.toc.map(item=><li class="page-index__section"><a href={`#${item.id}`}>{item.title}</a></li>)}</ul></nav>}<article class="content editorial-content" set:html={html}/></div></section></Page>
