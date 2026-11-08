@@ -36,7 +36,9 @@ if (process.env.MARTLET_BROWSER === '1' || process.env.KRIGSVOLD_BROWSER === '1'
     const form=await page.goto(origin+base+'form/');assert.equal(form.status(),200);
     if(enabled)await page.waitForFunction(()=>{const submit=document.querySelector('#submit');return submit && !submit.disabled},null,{timeout:10000});
     assert.equal(await page.locator('#submit').isDisabled(),!enabled);
-    await page.locator('header a').first().click();assert.equal(new URL(page.url()).pathname,base);
+    const brand=page.getByRole('link',{name:'Krigsvold Astro',exact:true});
+    assert.equal(await brand.getAttribute('href'),base);
+    await brand.click();assert.equal(new URL(page.url()).pathname,base);
    } finally {await context.close();}
   }
  } finally {
