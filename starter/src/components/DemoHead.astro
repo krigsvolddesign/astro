@@ -1,0 +1,34 @@
+---
+import {localPath as href} from '../paths';
+---
+<link rel="icon" href={href('/assets/mark.svg')}/>
+{['fonts','shell','jekyll'].map(name=><link rel="stylesheet" href={href(`/assets/css/${name}.css`)}/>)}
+<script is:inline>try{const root=document.documentElement,mode=localStorage.getItem('design-appearance')==='dark'?'dark':'light';root.dataset.appearance=mode;root.dataset.krigsvold=mode}catch{}</script>
+<script is:inline src={href('/assets/js/shell.js')} defer></script>
+<script is:inline>
+addEventListener('DOMContentLoaded',()=>{
+ const root=document.documentElement;
+ const sync=attribute=>{
+  const mode=root.getAttribute(attribute)==='dark'?'dark':'light';
+  for(const name of ['data-krigsvold','data-appearance'])if(root.getAttribute(name)!==mode)root.setAttribute(name,mode);
+  document.body.dataset.krigsvold=mode;
+  const native=document.querySelector('[data-appearance-toggle]');
+  if(native){native.setAttribute('aria-pressed',String(mode==='dark'));native.textContent=mode==='dark'?'Light mode':'Dark mode';}
+  const specimen=document.getElementById('appearance');
+  if(specimen){specimen.setAttribute('aria-pressed',String(mode==='dark'));specimen.textContent=mode==='dark'?'Light appearance':'Dark appearance';}
+ };
+ new MutationObserver(records=>sync(records.at(-1).attributeName)).observe(root,{attributes:true,attributeFilter:['data-krigsvold','data-appearance']});
+ sync('data-appearance');
+});
+</script>
+<style is:global>
+body.reference-specimen .krigsvold-page-header {padding:2.5rem 0 3rem;background:var(--navy-950,#061325);color:#fff;}
+body.reference-specimen .krigsvold-page-header h1 {font-size:clamp(2rem,4vw,3.5rem);line-height:1.12;color:inherit;}
+body.reference-specimen .krigsvold-page-header .krigsvold-eyebrow {color:#fff;}
+body.reference-specimen .krigsvold-page-header__summary {max-width:46rem;font-size:1rem;line-height:1.5;color:inherit;}
+body.reference-specimen .krigsvold-site-footer.site-footer .krigsvold-site-footer__top {display:grid;grid-template-columns:minmax(0,2fr) minmax(0,4fr);gap:3rem;}
+body.reference-specimen .krigsvold-site-footer.site-footer .krigsvold-site-footer__groups {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2rem;}
+@media(max-width:991.98px){body.reference-specimen .krigsvold-site-footer.site-footer .krigsvold-site-footer__top {grid-template-columns:1fr;}body.reference-specimen .krigsvold-site-footer.site-footer .krigsvold-site-footer__groups {grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(forced-colors:active){body.reference-specimen [class$="-page-header"] {background:Canvas;color:CanvasText;}body.reference-specimen [class$="-page-header"] h1,body.reference-specimen [class$="-page-header"] p {color:CanvasText;}}
+@media print {body.reference-specimen [class$="-page-header"] {padding:1rem 0;background:white;color:black;}}
+</style>

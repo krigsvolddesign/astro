@@ -1,12 +1,18 @@
 ---
-import { Layout, SiteHeader, SiteFooter, Section, SectionHeading, Stack, Cluster, Grid, Sidebar, Split, Card, Button } from '@krigsvold/astro';
+import { Layout, Section, SectionHeading, Stack, Cluster, Grid, Sidebar, Split, Card, Button } from '@krigsvold/astro';
 import '@krigsvold/core/source-profile.css';
 const letters='abcdefghijklmnopqrstuvwxyz'.repeat(12);
 import { localPath } from '../paths';
+import DemoHead from '../components/DemoHead.astro';
+import ReferenceHeader from '../reference/Header.astro';
+import ReferenceFooter from '../reference/Footer.astro';
+import ReferenceMasthead from '../reference/Hero.astro';
 ---
-<Layout title="Layout lab">
-  <SiteHeader slot="header" home={localPath('/')} name="Your website" links={[{href:localPath('/'),label:'Home'},{href:localPath('/article/'),label:'Article'},{href:localPath('/documentation/'),label:'Documentation'}]} />
-  <Section><h1>Layout lab</h1><p>Resize this page or enlarge its text. The structural classes respond to their containing regions.</p></Section>
+<Layout title="Layout lab" bodyClass="krigsvold-source-profile reference-specimen hero-context--compact">
+  <DemoHead slot="head"/>
+  <ReferenceHeader slot="header" home={localPath('/')} href={localPath}/>
+
+  <ReferenceMasthead page={{id:'layouts',title:'Layout lab',heroVariant:'compact'}} href={localPath}/><Section><p>Resize this page or enlarge its text. The structural classes respond to their containing regions.</p></Section>
   {['light','dark'].map(mode=><Section mode={mode} class="layout-lab" aria-labelledby={`lab-${mode}`}><Stack space="large">
     <SectionHeading title={`${mode === 'light' ? 'Light' : 'Dark'} compositions`} id={`lab-${mode}`} />
     <section><h2>Source-profile control states</h2><Button class="probe-baseline-disabled" disabled>Unavailable baseline</Button><div class="krigsvold-source-profile probe-source-controls"><Button class="probe-source-enabled">Source action</Button><Button class="probe-source-disabled" disabled>Unavailable source action</Button><div data-krigsvold={mode==='light'?'dark':'light'} class="krigsvold krigsvold-source-profile probe-nested-source"><Button class="probe-nested-enabled">Nested appearance action</Button><Button class="probe-nested-disabled" disabled>Unavailable nested action</Button></div><div data-krigsvold={mode==='light'?'dark':'light'} class="krigsvold probe-inherited-appearance"><Button class="probe-inherited-enabled">Nested inherited profile action</Button><Button class="probe-inherited-disabled" disabled>Unavailable inherited action</Button></div></div></section>
@@ -18,5 +24,5 @@ import { localPath } from '../paths';
     <section><h2>A split feature</h2><Split class="probe-split"><div><h3>The primary region</h3><p>The default ratio belongs to this design family.</p></div><Card slot="secondary"><h3>The secondary region</h3><p>At narrow widths it follows the primary region.</p></Card></Split></section>
     <section id={mode==='light'?'stress':undefined}><h2>Long references and code</h2><a href="#stress">{letters}</a><pre><code>{letters}</code></pre><div class="krigsvold-scroll" tabindex="0" role="region" aria-label={`${mode} wide table`}><table><caption>Wide data example</caption><thead><tr>{['First measurement','Second measurement','Third measurement','Fourth measurement'].map(x=><th scope="col">{x}</th>)}</tr></thead><tbody><tr>{[1,2,3,4].map(x=><td>{x}</td>)}</tr></tbody></table></div></section>
   </Stack></Section>)}
-  <SiteFooter slot="footer"><p>Your footer content.</p></SiteFooter>
+  <ReferenceFooter slot="footer" href={localPath}/>
 </Layout>
