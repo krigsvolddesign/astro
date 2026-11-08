@@ -4,15 +4,15 @@ import Page from '../reference/Page.astro';
 import Content from './Content.astro';
 const {page,href,base}=Astro.props;
 const referencePage={...page,...(page.id==='index'?{eyebrow:'The example library',heroVariant:'section'}:{})};
-const indexed=['reading','document'].includes(page.composition);
+const reading=['reading','document'].includes(page.composition);
+const contents=page.toc??page.sections.map(section=>({id:section.id,title:section.title}));
 ---
 <Page page={referencePage} current="/examples/">
  {page.dashboard?<div class="example-root example-frame--dashboard" data-example={page.id} data-semantic-class={page.semantic_class}><slot/></div>:<div class:list={['example-root',`example-frame--${page.composition||'landing'}`]} data-example={page.id} data-semantic-class={page.semantic_class}>
- <div class:list={['example-wrap',indexed&&'example-reading']}>
+ <div class:list={['example-wrap',reading&&'example-reading']}>
  {page.id!=='index'&&<nav class="example-breadcrumb" aria-label="Breadcrumb"><a href={href('/')}>Overview</a><span aria-hidden="true">/</span><a href={href('/examples/')}>Examples</a><span aria-hidden="true">/</span><span aria-current="page">{page.semantic_class?.replaceAll('-',' ')}</span></nav>}
- <div class:list={[page.composition==='document'&&'example-document']}>
- {indexed&&<nav class="example-local-index" aria-label="On this page"><p class="eyebrow">On this page</p><ol>{page.sections.map(section=><li><a href={`#${section.id}`}>{section.title}</a></li>)}</ol></nav>}
- <div><article aria-labelledby="page-title">{page.id==='report'&&<div class="example-report-index"><nav class="example-local-index" aria-label="Report sections"><p class="eyebrow">Report sections</p><ol>{page.sections.map(section=><li><a href={`#${section.id}`}>{section.title}</a></li>)}</ol></nav></div>}<div class:list={[page.id==='report'&&'example-report-body']}><Content page={page} href={href} base={base} Button={Button}/></div></article></div>
+ <div>
+ <article aria-labelledby="page-title">{page.show_toc===true&&contents.length>0&&<nav class="example-local-index" aria-label="Manual contents"><p class="eyebrow">Manual contents</p><ol>{contents.map(item=><li><a href={`#${item.id}`}>{item.title}</a></li>)}</ol></nav>}<div class:list={[page.id==='report'&&'example-report-body']}><Content page={page} href={href} base={base} Button={Button}/></div></article>
  </div>
  {page.id!=='index'&&<p class="example-port-note">A {page.semantic_class?.replaceAll('-',' ')} recipe in Krigsvold. <a href={href('/examples/integrations/')}>Capabilities and integration boundaries</a> · <a href={href('/examples/')}>All examples</a></p>}
  </div></div>}

@@ -5,15 +5,17 @@ import { localPath } from '../paths';
 import DemoHead from '../components/DemoHead.astro';
 import ReferenceHeader from '../reference/Header.astro';
 import DemoFooter from '../components/DemoFooter.astro';
+// Optional author-supplied contents: set true only when this document needs them.
+const show_toc = false;
 ---
-<ArticleLayout title="A clear account of the work" summary="A short introduction gives the reader enough context to begin." eyebrow="An example article" sidebarLabel="Related reading" bodyClass="krigsvold-source-profile reference-specimen hero-context--compact">
+<ArticleLayout title="A clear account of the work" summary="A short introduction gives the reader enough context to begin." eyebrow="An example article" sidebarLabel="Related reading" bodyClass="krigsvold-source-profile reference-specimen">
   <Fragment slot="head"><DemoHead/><meta name="example-head" content="forwarded"/></Fragment>
   <ReferenceHeader slot="header" home={localPath('/')} href={localPath}/>
 
   <p slot="metadata">Example author · <time datetime="2026-01-01">January 1, 2026</time></p>
-  <TableOfContents slot="contents" items={[{href:'#question',label:'Begin with the question'},{href:'#detail',label:'A closer look',depth:3},{href:'#evidence',label:'Present the evidence'}]} />
+  <TableOfContents slot="contents" label="Manual contents" variant="inline" items={show_toc ? [{href:'#question',label:'Begin with the question'},{href:'#detail',label:'A closer look',depth:3},{href:'#evidence',label:'Present the evidence'}] : []} />
   <h2 id="question">Begin with the question</h2><p>Long-form content needs a reliable measure and room for supporting evidence. This article shares its design definitions with the landing page, while giving the prose its own space.</p>
-  <h3 id="detail">A closer look</h3><p>Children remain related to their parent section in the contents navigation.</p>
+  <h3 id="detail">A closer look</h3><p>If enabled, manual contents keep child sections related to their parent.</p>
   <h2 id="evidence">Present the evidence</h2><p>Figures, references, quotations, and code should remain usable when the browser is narrow or the reader enlarges the text.</p>
   <pre><code>const longExample = 'abcdefghijklmnopqrstuvwxyz'.repeat(20);</code></pre>
   <p><a href={localPath('/documentation/')}>Continue to the documentation example.</a></p>

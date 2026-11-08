@@ -1,7 +1,7 @@
 ---
 export interface ContentsItem { href: string; label: string; depth?: 2 | 3; }
 interface Props { items: ContentsItem[]; label?: string; variant?: 'index' | 'inline'; class?: string; }
-const {items, label = 'On this page', variant = 'index', class: className} = Astro.props;
+const {items, label = 'On this page', variant = 'inline', class: className} = Astro.props;
 const sections: {item: ContentsItem; children: ContentsItem[]}[] = [];
 for (const item of items) {
   if (item.depth === 3) {
