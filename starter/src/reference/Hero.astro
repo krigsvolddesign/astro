@@ -11,3 +11,6 @@ const width=variant==='signature'?2172:1920,height=width/3;
  <div class="page-masthead__veil"></div><div class="container"><div class="row"><div class="col-lg-9">{(page.eyebrow||page.category)&&<p class="eyebrow">{page.eyebrow||`${page.category} · Fictional demonstration`}</p>}<h1 id="page-title">{page.title}</h1>{page.summary&&<p>{page.summary}</p>}{image&&variant==='section'&&<p class="hero-image-credit"><a href={href('/image-credits/')}>Image credits and licenses</a></p>}{page.date&&<div class="masthead-metadata"><time datetime={page.date}>{formatCatalogDate(page.date,'long')||page.date}</time>{page.author&&<> · {page.author}</>}</div>}</div></div></div>
 </header>
 {variant==='signature'&&<div class="krigsvold-palette-ribbon" aria-hidden="true">{['#061325','#0a1d35','#123456','#286a9d','#9ed5e6','#d9eef4','#eef8fa','#fbfaf7','#17202a','#56616c','#d9dee2','#b58a3b'].map(color=><span style={`--palette-swatch:${color}`}></span>)}</div>}
+<style>
+ .page-masthead h1 { text-wrap:wrap; }
+</style>

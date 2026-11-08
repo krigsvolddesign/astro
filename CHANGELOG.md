@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.5
+
+- Keep native reference masthead title wrapping consistent with the accepted Jekyll host, preventing the component library’s balanced-heading default from changing mobile line breaks.
+- Scope the correction to the shipped reference masthead; preserve component defaults, typography, imagery, and page content.
+
 ## 2.0.4
 
 - Restore direct article children in reference Markdown pages so the existing family stylesheet applies its lead-paragraph typography and spacing.
