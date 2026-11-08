@@ -62,7 +62,8 @@ try{
  assert.ok(index.y+index.height<=firstSection.y+1,'Explicit wide contents stays inline above the reading content');
  const articleMain=await page.locator('.krigsvold-reading-layout__body .krigsvold-sidebar__main').boundingBox(), articleAside=await page.locator('.krigsvold-reading-layout__body .krigsvold-sidebar__aside').boundingBox();
  assert.ok(Math.abs(articleMain.y-articleAside.y)<2 && articleAside.x>articleMain.x,'Supported article has an actual side-by-side supporting region');
- assert.ok(articleMain.width<=await page.evaluate(()=>{const v=getComputedStyle(document.documentElement).getPropertyValue('--krigsvold-reading-width').trim();return parseFloat(v)*(v.endsWith('rem')?parseFloat(getComputedStyle(document.documentElement).fontSize):1);})+1,'Prose retains its reading measure');
+ const sustainedProse=await page.locator('.krigsvold-reading-layout__body .krigsvold-sidebar__main > .krigsvold-prose').boundingBox();
+ assert.ok(sustainedProse.width<=await page.evaluate(()=>{const v=getComputedStyle(document.documentElement).getPropertyValue('--krigsvold-reading-width').trim();return parseFloat(v)*(v.endsWith('rem')?parseFloat(getComputedStyle(document.documentElement).fontSize):1);})+1,'Prose retains its reading measure');
  assert.equal(await page.locator('.krigsvold-site-footer__groups nav').count(),4);
  assert.equal(await page.locator('.krigsvold-site-footer--grouped').evaluate(e=>getComputedStyle(e).backgroundColor),'rgb(6, 19, 37)');
  await page.locator('.krigsvold-site-footer--grouped').screenshot({path:'artifacts/qa/footer-desktop.png'});

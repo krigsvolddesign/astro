@@ -12,7 +12,7 @@ const { title, documentTitle = title, description, summary, eyebrow, mode = 'lig
   <slot name="footer" slot="footer" />
   <slot name="body-end" slot="body-end" />
   <PageHeader title={title} summary={summary} eyebrow={eyebrow}><slot name="metadata" /></PageHeader>
-  <div class="krigsvold-page-body"><Container width={Astro.slots.has('navigation') ? 'content' : 'reading'}>
+  <div class:list={['krigsvold-page-body', Astro.slots.has('navigation') && 'krigsvold-reading-layout--supported']}><Container width={Astro.slots.has('navigation') ? 'content' : 'reading'}>
     {Astro.slots.has('navigation') ? <Sidebar side="start" sidebarLabel={sidebarLabel}><Fragment slot="sidebar"><slot name="navigation" /></Fragment><article class="krigsvold-prose">{Astro.slots.has('contents') && <div class="krigsvold-reading-layout__contents" style="position:static;max-block-size:none;overflow:visible"><slot name="contents" /></div>}<slot /></article></Sidebar> : <article class="krigsvold-prose">{Astro.slots.has('contents') && <div class="krigsvold-reading-layout__contents" style="position:static;max-block-size:none;overflow:visible"><slot name="contents" /></div>}<slot /></article>}
   </Container></div>
 </Layout>
