@@ -32,7 +32,7 @@ try {
   await checkDashboardFamily(join(site,'dist'),'krigsvold');
   const html=await readFile(join(site,'dist/index.html'),'utf8');
   assert.match(html,/data-krigsvold="light"/);
-  assert.match(html,/<h1\b[^>]*>Krigsvold, in plain sight\.<\/h1>/,'The root is the family reference homepage');
+  assert.match(html,/<h1\b[^>]*>Krigsvold for Astro<\/h1>/,'The root is the family reference homepage');
   assert.match(html,/Krigsvold Astro/);
   assert.match(html,/data-hero-variant="signature"/);
   assert.match(html,/aria-label="Primary navigation"/);
