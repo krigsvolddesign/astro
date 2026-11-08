@@ -8,7 +8,7 @@ Source files `src/styles/site.css`, `public/assets/css/material-kit.min.css` and
 
 ## Run
 
-From this directory: `npm install --ignore-scripts`; then `npm run build` or `npm run dev`. Routes: `/` (home composition), `/article/` (editorial reading), `/document/` (documentation), `/search/` (functional local synthetic route search). No source-site content or live data is used. The baseline is `noindex` and is not yet wired into Cloudflare deployment.
+From this directory: `npm install --ignore-scripts`; then `npm run build` or `npm run dev`. Routes: `/` (home composition), `/article/` (editorial reading), `/document/` (documentation), `/search/` (functional local synthetic route search). No source-site content or live data is used. The baseline is `noindex` and is delivered only by the accepted `develop` Cloudflare preview after integration.
 
 ## Architecture and acceptance
 
@@ -29,3 +29,7 @@ Pinned source Git blobs: {
   "popper": "b0b21c22626c70729cf661c50a282705245dfebe",
   "materialJs": "d5b4d856c7e7d87e4022edaa20bf7a6d17c441e5"
 }
+
+## Cloudflare preview
+
+The accepted `develop` build uses `scripts/deployment/build-neutral-baseline.mjs` to serve this specimen at the existing preview Worker (no custom production domain, no npm publication). The `main` builder remains unchanged. Candidate feature branches do not deploy. An advisory PR check builds the actual payload before integration; the existing Cloudflare Git connection must then run on `develop`. No live Cloudflare deployment is claimed by PR CI alone.
