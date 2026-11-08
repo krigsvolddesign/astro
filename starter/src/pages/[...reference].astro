@@ -2,8 +2,9 @@
 import Page from '../reference/Page.astro';
 import documents from '../reference/documents.json';
 import {renderMarkdown} from '../markdown.mjs';
+import {referenceHeadingAnchors} from '../reference/heading-anchors.mjs';
 export function getStaticPaths(){return documents.map(page=>({params:{reference:page.path},props:{page}}));}
 const {page}=Astro.props;
-const html=renderMarkdown(page.body,import.meta.env.BASE_URL);
+const html=referenceHeadingAnchors(renderMarkdown(page.body,import.meta.env.BASE_URL),page.toc);
 ---
 <Page page={page} current={`/${page.path}/`}><section class="section"><div class="container jekyll-document">{page.toc&&<aside class="page-index"><nav class="toc" aria-label="On this page"><strong>On this page</strong><ul>{page.toc.map(item=><li><a href={`#${item.id}`}>{item.title}</a></li>)}</ul></nav></aside>}<article class="content editorial-content" set:html={html}/></div></section></Page>
