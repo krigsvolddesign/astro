@@ -8,7 +8,7 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@krigsvold/astro": "^2.0.1",
+    "@krigsvold/astro": "^2.0.2",
     "astro": "^7.3.2",
     "@krigsvold/core": "^2.2.5",
     "markdown-it": "14.3.3",

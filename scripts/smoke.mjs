@@ -24,9 +24,24 @@ try {
   execFileSync('npm',['run','build'],{cwd:site,stdio:'inherit',timeout:180000,env:{...process.env,NIGHTJAR_BASE:'/'}});
   await checkDashboardFamily(join(site,'dist'),'krigsvold');
   const html=await readFile(join(site,'dist/index.html'),'utf8');
-  assert.match(html,/data-krigsvold="light"/);assert.match(html,/data-krigsvold="dark"/);
-  assert.match(html,/id="main-content"/);assert.match(html,/type="button"[^>]*disabled|disabled[^>]*type="button"/);
+  assert.match(html,/data-krigsvold="light"/);
+  assert.match(html,/<h1\b[^>]*>Krigsvold, in plain sight\.<\/h1>/,'The root is the family reference homepage');
+  assert.match(html,/Krigsvold Astro/);
+  assert.match(html,/data-hero-variant="signature"/);
+  assert.match(html,/aria-label="Primary navigation"/);
+  assert.match(html,/<footer\b[^>]*class="[^"]*\bsite-footer\b/);
+  assert.equal((html.match(/<main\b/g)||[]).length,1,'The reference homepage has one main landmark');
+  assert.equal((html.match(/<h1\b/g)||[]).length,1,'The reference homepage has one page heading');
+  const hero=html.match(/\bsrc="(\/assets\/images\/hero\/krigsvold-hero-\d+\.webp)"/)?.[1];
+  assert.ok(hero,'The approved signature image is referenced by the homepage');
+  assert.ok((await readFile(join(site,'dist',hero.slice(1)))).length>0,'The consuming build contains the approved signature image');
+  // The layout laboratory retains simultaneous light/dark component coverage;
+  // the canonical homepage is no longer a generic component demonstration.
+  const layoutsHtml=await readFile(join(site,'dist/layouts/index.html'),'utf8');
+  assert.match(layoutsHtml,/data-krigsvold="light"/);assert.match(layoutsHtml,/data-krigsvold="dark"/);
   const formHtml=await readFile(join(site,'dist/form/index.html'),'utf8');
+  assert.match(formHtml,/id="main-content"/);
+  assert.match(formHtml,/type="button"[^>]*disabled|disabled[^>]*type="button"/);
   for(const [id,type] of [['submit','submit'],['reset-button','reset'],['default-button','button']]) {
     const tag=formHtml.match(new RegExp('<button\\b[^>]*id="'+id+'"[^>]*>'))?.[0];
     assert.ok(tag,id+' exists'); assert.equal((tag.match(/\btype=/g)||[]).length,1,'Exactly one type attribute for '+id);
@@ -41,7 +56,7 @@ try {
     const page=await readFile(join(site,'dist',route,'index.html'),'utf8');
     assert.equal((page.match(/<main\b/g)||[]).length,1,route+' should have one main landmark');
     assert.equal((page.match(/<h1\b/g)||[]).length,1,route+' should have one page h1');
-    assert.match(page,/krigsvold-site-header/);assert.match(page,/krigsvold-site-footer/);
+    assert.match(page,/aria-label="Primary navigation"/);assert.match(page,/<footer\b[^>]*class="[^"]*\bsite-footer\b/);
   }
   const article=await readFile(join(site,'dist/article/index.html'),'utf8');
   assert.match(article,/name="example-head" content="forwarded"/);
@@ -53,7 +68,8 @@ try {
   assert.ok(article.indexOf('krigsvold-reading-layout__body') < article.indexOf('krigsvold-sidebar__aside'));
   assert.match(article,/krigsvold-site-footer--grouped/);
   assert.equal((article.match(/class="krigsvold-site-footer__group"/g)||[]).length,4);
-  assert.ok(article.includes('Your ownership statement.') && article.includes('Your contact destination'));
+  assert.ok(article.includes('Krigsvold Astro') && article.includes('A website of James Howard'),'Identity slot reaches the grouped footer');
+  assert.ok(article.includes('Copyright © 2026 James P. Howard, II'),'Base slot reaches the grouped footer');
   const guide=await readFile(join(site,'dist/documentation/index.html'),'utf8');
   assert.ok(guide.indexOf('krigsvold-sidebar__aside')<guide.indexOf('krigsvold-sidebar__main'));
   if(process.env.KRIGSVOLD_BROWSER === '1') execFileSync(process.execPath,[join(root,'scripts/browser.mjs'),join(site,'dist')],{cwd:root,stdio:'inherit',timeout:210000});
