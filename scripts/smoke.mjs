@@ -62,16 +62,25 @@ try {
   assert.match(article,/name="example-head" content="forwarded"/);
   assert.match(article,/id="body-end-example"/);
   assert.ok(article.indexOf('krigsvold-sidebar__main')<article.indexOf('krigsvold-sidebar__aside'));
-  assert.match(article,/<nav aria-label="On this page"/);
+  assert.match(article,/<nav aria-label="Manual contents"/);
   assert.match(article,/<li><a href="#question">[^<]+<\/a><ul><li><a href="#detail">/);
-  assert.ok(article.indexOf('krigsvold-reading-layout__contents') < article.indexOf('krigsvold-reading-layout__body'));
+  assert.ok(article.indexOf('krigsvold-reading-layout__body') < article.indexOf('krigsvold-reading-layout__contents'));
+  assert.ok(article.indexOf('krigsvold-reading-layout__contents') < article.indexOf('id="question"'));
   assert.ok(article.indexOf('krigsvold-reading-layout__body') < article.indexOf('krigsvold-sidebar__aside'));
   assert.match(article,/krigsvold-site-footer--grouped/);
   assert.equal((article.match(/class="krigsvold-site-footer__group"/g)||[]).length,4);
   assert.ok(article.includes('Krigsvold Astro') && article.includes('A website of James Howard'),'Identity slot reaches the grouped footer');
   assert.ok(article.includes('Copyright © 2026 James P. Howard, II'),'Base slot reaches the grouped footer');
   const guide=await readFile(join(site,'dist/documentation/index.html'),'utf8');
-  assert.ok(guide.indexOf('krigsvold-sidebar__aside')<guide.indexOf('krigsvold-sidebar__main'));
+  assert.match(guide,/<nav aria-label="Manual contents"/);
+  assert.ok(!guide.includes('krigsvold-sidebar__aside'),'Inline manual contents do not create a margin sidebar');
+  assert.ok(guide.indexOf('krigsvold-reading-layout__contents')<guide.indexOf('id="install"'));
+  for (const route of ['language','examples/faq','examples/changelog','examples/report']) {
+    const html=await readFile(join(site,'dist',route,'index.html'),'utf8');
+    assert.doesNotMatch(html,/aria-label="(?:On this page|Report sections|Manual contents)"/,route+' must not insert automatic contents');
+  }
+  const language=await readFile(join(site,'dist/language/index.html'),'utf8');
+  for(const id of ['relationships','hierarchy','states','boundaries'])assert.ok(language.includes('id="'+id+'"'),'Stable language heading remains: '+id);
   if(process.env.KRIGSVOLD_BROWSER === '1') execFileSync(process.execPath,[join(root,'scripts/browser.mjs'),join(site,'dist')],{cwd:root,stdio:'inherit',timeout:210000});
   if(process.env.KRIGSVOLD_BROWSER === '1') execFileSync(process.execPath,[join(root,'scripts/dashboard-resize-check.mjs'),join(site,'dist'),'/'],{cwd:root,stdio:'inherit',timeout:70000});
   if(process.env.KRIGSVOLD_BROWSER === '1') execFileSync(process.execPath,[join(root,'scripts/placeholder-contrast-check.mjs'),join(site,'dist'),'/'],{cwd:root,stdio:'inherit',timeout:70000});

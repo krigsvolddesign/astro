@@ -1,17 +1,17 @@
 ---
-import { DocumentationLayout, Stack } from '@krigsvold/astro';
+import { DocumentationLayout, TableOfContents } from '@krigsvold/astro';
 import { localPath } from '../paths';
 import DemoHead from '../components/DemoHead.astro';
 import ReferenceHeader from '../reference/Header.astro';
 import ReferenceFooter from '../reference/Footer.astro';
 ---
-<DocumentationLayout title="A guide to your project" summary="Documentation with a reading column and a separate navigation region." sidebarLabel="Guide contents" bodyClass="krigsvold-source-profile reference-specimen hero-context--compact">
+<DocumentationLayout title="A guide to your project" summary="Documentation with a reading column and explicitly supplied inline contents." sidebarLabel="Guide contents" bodyClass="krigsvold-source-profile reference-specimen hero-context--compact">
   <DemoHead slot="head"/>
   <ReferenceHeader slot="header" home={localPath('/')} href={localPath}/>
 
-  <nav slot="navigation" aria-label="On this page"><Stack as="ul" space="small"><li><a href="#install">Installation</a></li><li><a href="#compose">Composition</a></li><li><a href="#adapt">Adaptation</a></li></Stack></nav>
+  <TableOfContents slot="contents" label="Manual contents" variant="inline" items={[{href:'#install',label:'Installation'},{href:'#compose',label:'Composition'},{href:'#adapt',label:'Adaptation'}]}/>
   <h2 id="install">Installation</h2><pre><code>npm install ./PATH-TO-krigsvold-core.tgz ./PATH-TO-krigsvold-astro.tgz astro</code></pre>
-  <h2 id="compose">Composition</h2><p>The navigation comes first in source order. At narrower widths it appears above the article; it does not become a hidden menu.</p>
+  <h2 id="compose">Composition</h2><p>These manual contents are explicitly supplied in the contents slot and remain inline above the reading content at every width.</p>
   <h2 id="adapt">Adaptation</h2><p>Use class hooks and namespaced layout variables for deliberate changes. Content, routes, identity, and application behavior remain yours.</p>
   <ReferenceFooter slot="footer" href={localPath}/>
 </DocumentationLayout>

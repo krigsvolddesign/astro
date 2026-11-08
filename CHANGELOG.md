@@ -2,8 +2,10 @@
 
 ## 2.0.3
 
-- Restore the canonical single `nav.page-index` contents region instead of a nested navigation wrapper that draws a second border.
-- Use the native `p.eyebrow` heading and `li.page-index__section` items while retaining the existing section links and destinations.
+- Make reference-page contents navigation opt-in, with no automatically inserted TOC by default.
+- Render explicitly supplied contents inline above the prose in `ArticleLayout` and `DocumentationLayout`; default `TableOfContents` to its inline variant.
+- Preserve authored section links, component slots, supporting sidebars, and the separate documentation site-navigation sidebar.
+- Use a single native contents navigation when explicitly enabled, avoiding nested wrappers and duplicate borders.
 
 ## 2.0.2
 

@@ -1,6 +1,6 @@
 # Krigsvold for Astro
 
-`@krigsvold/astro` 2.x integrates the independently published `@krigsvold/core` package. Version 2.0.3 restores the canonical contents navigation in the shipped starter and native reference site, retaining the accepted Krigsvold Jekyll visual baseline and existing component APIs.
+`@krigsvold/astro` 2.x integrates the independently published `@krigsvold/core` package. Version 2.0.3 makes contents navigation optional and inline in the shipped starter, native reference site, and reading layouts, retaining the Krigsvold visual language and existing component slots.
 
 `@krigsvold/astro` provides reusable Astro layouts and components. The framework-independent [`@krigsvold/core`](https://github.com/krigsvolddesign/core) package owns the design definitions and font roles, extracted from krigsvold.org. Astro adds composition, never a competing palette.
 
@@ -32,6 +32,8 @@ import { Layout, Container, SectionHeading, Card, Button } from '@krigsvold/astr
 Components also have direct exports such as `@krigsvold/astro/Container.astro`. For an existing document shell, import `@krigsvold/astro/styles.css`, set `data-krigsvold="light"` or `dark`, and add `class="krigsvold"` around the styled content. The framework-independent core offers narrower imports if you do not want fonts or element styling.
 
 `Container` supports content, reading, and archive widths. `SectionHeading` supports h2/h3, alignment, eyebrow, description, class hooks, and a divider slot. `Card` is an article wrapper. `Button` accepts native anchor/button attributes and defaults buttons to `type="button"`.
+
+Contents navigation is opt-in. Pass an explicitly authored `TableOfContents` to the `contents` slot of `ArticleLayout` or `DocumentationLayout`, or place it directly in the prose. It stays inline above the reading content, and the default variant is `inline`; these layouts do not scan headings or insert a TOC automatically. `DocumentationLayout` keeps its separate `navigation` slot for a genuine site-navigation sidebar, and `ArticleLayout` retains its supporting `sidebar` slot.
 
 ## Starter
 

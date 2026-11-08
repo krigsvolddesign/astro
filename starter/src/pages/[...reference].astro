@@ -5,6 +5,7 @@ import {renderMarkdown} from '../markdown.mjs';
 import {referenceHeadingAnchors} from '../reference/heading-anchors.mjs';
 export function getStaticPaths(){return documents.map(page=>({params:{reference:page.path},props:{page}}));}
 const {page}=Astro.props;
-const html=referenceHeadingAnchors(renderMarkdown(page.body,import.meta.env.BASE_URL),page.toc);
+const html=referenceHeadingAnchors(renderMarkdown(page.body,import.meta.env.BASE_URL),page.anchors??page.toc);
+const contents=page.toc??page.anchors??[];
 ---
-<Page page={page} current={`/${page.path}/`}><section class="section"><div class="container jekyll-document">{page.toc&&<nav class="page-index" aria-label="On this page"><p class="eyebrow">On this page</p><ul>{page.toc.map(item=><li class="page-index__section"><a href={`#${item.id}`}>{item.title}</a></li>)}</ul></nav>}<article class="content editorial-content" set:html={html}/></div></section></Page>
+<Page page={page} current={`/${page.path}/`}><section class="section"><div class="container jekyll-document"><article class="content editorial-content">{page.show_toc===true&&contents.length>0&&<nav class="toc" aria-label="Manual contents"><p class="eyebrow">Manual contents</p><ul>{contents.map(item=><li><a href={`#${item.id}`}>{item.title}</a></li>)}</ul></nav>}<div set:html={html}/></article></div></section></Page>
