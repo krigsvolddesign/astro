@@ -1,0 +1,14 @@
+---
+import ThemeLayout from '@krigsvold/astro/Layout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import '../styles/site.css';
+const {title='Krigsvold source reference',description='A content-neutral Astro source specimen.'}=Astro.props;
+---
+<ThemeLayout title={title} description={description} mainId="main-content" mainTabindex={-1} bodyClass="krigsvold-home">
+  <Fragment slot="head"><meta name="robots" content="noindex,nofollow"/><link rel="stylesheet" href="/assets/css/material-kit.min.css" /></Fragment>
+  <Fragment slot="header"><SiteHeader/><slot name="hero"/></Fragment>
+  <slot/>
+  <SiteFooter slot="footer"/>
+  <Fragment slot="body-end"><script is:inline src="/assets/js/core/popper.min.js"></script><script is:inline src="/assets/js/core/bootstrap.min.js"></script><script is:inline src="/assets/js/material-kit.min.js"></script></Fragment>
+</ThemeLayout>
