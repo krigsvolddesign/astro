@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.4
+
+- Restore direct article children in reference Markdown pages so the existing family stylesheet applies its lead-paragraph typography and spacing.
+- Preserve optional inline contents, stable heading anchors, and all page content without adding a parallel style override.
+
 ## 2.0.3
 
 - Keep native component-demo mastheads below navigation and their metadata legible on the inverse header.
