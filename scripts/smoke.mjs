@@ -12,7 +12,7 @@ const temp=await mkdtemp(join(tmpdir(),'krigsvold-packed-'));
 try {
   const pack=cwd=>JSON.parse(execFileSync('npm',['pack','--ignore-scripts','--json','--pack-destination',temp],{cwd,encoding:'utf8',stdio:['ignore','pipe','inherit']}))[0].filename;
   const coreArchive=core?pack(core):null,astroArchive=pack(root);
-  const site=join(temp,'site');await cp(join(root,'starter'),site,{recursive:true});await mkdir(join(site,'vendor'));
+  const site=join(temp,'site');await cp(join(root,'reference'),site,{recursive:true,filter:path=>!/[\\/](node_modules|dist|\.astro)([\\/]|$)/.test(path)});await mkdir(join(site,'vendor'));
   // The shipped demos have no contents by default. This isolated consumer
   // explicitly enables their optional API specimen for the existing checks.
   for(const name of ['article','documentation']) {
@@ -91,12 +91,12 @@ try {
   if(process.env.KRIGSVOLD_BROWSER === '1') execFileSync(process.execPath,[join(root,'scripts/browser.mjs'),join(site,'dist')],{cwd:root,stdio:'inherit',timeout:210000});
   if(process.env.KRIGSVOLD_BROWSER === '1') execFileSync(process.execPath,[join(root,'scripts/dashboard-resize-check.mjs'),join(site,'dist'),'/'],{cwd:root,stdio:'inherit',timeout:70000});
   if(process.env.KRIGSVOLD_BROWSER === '1') execFileSync(process.execPath,[join(root,'scripts/placeholder-contrast-check.mjs'),join(site,'dist'),'/'],{cwd:root,stdio:'inherit',timeout:70000});
-  // A host may install this starter beneath a prefix; test its emitted internal URLs.
+  // A host may install this reference beneath a prefix; test its emitted internal URLs.
   execFileSync('npm',['run','build'],{cwd:site,stdio:'inherit',timeout:180000,env:{...process.env,NIGHTJAR_BASE:'/preview/'}});
   await checkDashboardFamily(join(site,'dist'),'krigsvold');
   execFileSync(process.execPath,[join(root,'scripts/subpath-check.mjs'),join(site,'dist')],{cwd:root,stdio:'inherit',timeout:30000});
   if(process.env.KRIGSVOLD_BROWSER === '1') execFileSync(process.execPath,[join(root,'scripts/dashboard-resize-check.mjs'),join(site,'dist'),'/preview/'],{cwd:root,stdio:'inherit',timeout:70000});
   if(process.env.KRIGSVOLD_BROWSER === '1') execFileSync(process.execPath,[join(root,'scripts/placeholder-contrast-check.mjs'),join(site,'dist'),'/preview/'],{cwd:root,stdio:'inherit',timeout:70000});
-  if(process.env.KRIGSVOLD_KEEP_FIXTURE) console.log('Packed starter fixture: '+temp);
-  console.log('Packed starter build passed: both modes, all font roles, local font assets, and native button behavior.');
+  if(process.env.KRIGSVOLD_KEEP_FIXTURE) console.log('Packed reference fixture: '+temp);
+  console.log('Packed reference build passed: both modes, all font roles, local font assets, and native button behavior.');
 } finally { if (!process.env.KRIGSVOLD_KEEP_FIXTURE) await rm(temp,{recursive:true,force:true}); }

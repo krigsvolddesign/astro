@@ -1,0 +1,21 @@
+{
+  "name": "krigsvold-astro-reference",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@krigsvold/astro": "2.0.6",
+    "astro": "7.3.2",
+    "@krigsvold/core": "2.2.5",
+    "markdown-it": "14.3.3",
+    "markdown-it-footnote": "4.0.0",
+    "sanitize-html": "2.18.1"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}
