@@ -75,3 +75,5 @@ The starter `/form/` demonstrates native HTML with supported core form classes, 
 ## Reference delivery
 
 The starter includes all 50 canonical examples, three dashboards, and a separate scientific workspace. These are explicitly simulated host applications, not exported Astro controllers. See [native Cloudflare delivery](docs/deployment.md) for source identity, integrity, previews, and rollback.
+
+The stock article and documentation demos set `show_toc = false`. Authors may explicitly enable their manual contents specimen; it remains inline above the reading content.

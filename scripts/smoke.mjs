@@ -13,6 +13,13 @@ try {
   const pack=cwd=>JSON.parse(execFileSync('npm',['pack','--ignore-scripts','--json','--pack-destination',temp],{cwd,encoding:'utf8',stdio:['ignore','pipe','inherit']}))[0].filename;
   const coreArchive=core?pack(core):null,astroArchive=pack(root);
   const site=join(temp,'site');await cp(join(root,'starter'),site,{recursive:true});await mkdir(join(site,'vendor'));
+  // The shipped demos have no contents by default. This isolated consumer
+  // explicitly enables their optional API specimen for the existing checks.
+  for(const name of ['article','documentation']) {
+    const file=join(site,'src/pages',name+'.astro'),source=await readFile(file,'utf8');
+    assert.match(source,/const show_toc = false;/,'Stock '+name+' leaves contents off');
+    await writeFile(file,source.replace('const show_toc = false;','const show_toc = true;'));
+  }
   for(const archive of [coreArchive,astroArchive].filter(Boolean))await cp(join(temp,archive),join(site,'vendor',archive));
   const pkg=JSON.parse(await readFile(join(site,'package.json'),'utf8'));
   pkg.dependencies['@krigsvold/core']=core?'file:vendor/'+coreArchive:pin.core.version;
