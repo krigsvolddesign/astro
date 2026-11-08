@@ -17,6 +17,9 @@ case "$branch" in
     python3 scripts/deployment/artifact.py config --branch "$branch" --sha "$sha" --directory .cloudflare-site --output ".cloudflare-wrangler.$branch.json"
     ;;
   feature/*|fix/*|hotfix/*|release/*)
+    if [[ -n "${GITHUB_REPOSITORY:-}" && "$GITHUB_REPOSITORY" != "krigsvolddesign/astro" ]]; then
+      echo 'Unexpected GitHub repository identity for candidate preview' >&2; exit 1
+    fi
     if [[ "$branch" = "feature/krigsvold-canonical-neutral-baseline" ]]; then
       CANONICAL_SOURCE_REPO="basuhoward/krigsvold.org" CANONICAL_SOURCE_SHA="007a4d379e9bd37dee55f86827df6e067ff27335" \
         timeout 600s npm exec --yes --package=npm@11.15.0 -- node scripts/deployment/build-neutral-baseline.mjs
