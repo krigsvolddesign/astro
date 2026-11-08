@@ -1,0 +1,7 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HomeHero from '../components/HomeHero.astro';
+import HomeContent from '../components/HomeContent.astro';
+const page={featured_image:'/assets/img/home-banner.webp'};
+---
+<BaseLayout title="Krigsvold source baseline · Overview"><HomeHero slot="hero" page={page}/><HomeContent/></BaseLayout>
