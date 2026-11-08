@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.6
+
+- Restore ordinary wrapping for native reference editorial headings, matching the accepted Jekyll reading pages instead of inheriting the component library’s balanced-heading default.
+- Keep the correction within reference editorial content and retain the existing masthead correction, application layouts, component defaults, and published release history.
+
 ## 2.0.5
 
 - Keep native reference masthead title wrapping consistent with the accepted Jekyll host, preventing the component library’s balanced-heading default from changing mobile line breaks.
