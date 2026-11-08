@@ -50,11 +50,13 @@ try {
   for(const path of paths.filter(p=>p.endsWith('.html'))){
     const topic=relative(dist,path).split('\\').join('/');let html=await readFile(path,'utf8');
     if(!/^[A-Za-z0-9._~/-]+$/.test(topic))throw Error('Unsafe documentation topic');
-    if(!html.includes('</head>')||!/<main\b/i.test(html))throw Error(`Unexpected HTML shell: ${topic}`);
+    if(!html.includes('</head>')||!/<main\b/i.test(html)||!html.includes('</main>'))throw Error(`Unexpected HTML shell: ${topic}`);
     for(const attr of html.matchAll(/\b(?:href|src)=["']([^"']+)["']/g))if(attr[1].startsWith('/')&&!attr[1].startsWith(base))throw Error(`Link escapes archive base: ${attr[1]}`);
     const links=baseline.versions.map(x=>`<li><a href="${versionTopicURL(baseline,x.version,topic,prefix||'/')}">v${x.version}${x.version===baseline.latestStable?' (latest stable)':''}${x.supported?'':' (unsupported)'}${x.channel==='prerelease'?' (prerelease)':''}</a></li>`).join('');
-    const nav=`<nav aria-label="Documentation versions" data-version-nav data-topic="${topic}"><p>Astro documentation v${version}</p><p><a href="${prefix}/docs/versions/">All documentation versions</a></p><ul><li><a aria-current="page" href="${base}${topic}">v${version} (current)</a></li>${links}</ul></nav>`;
-    html=html.replace('</head>',`<meta name="robots" content="noindex, follow"><script type="module" src="${base}version-navigation.js"></script></head>`).replace(/<main\b/i,`${nav}<main`);
+    const nav=`<nav class="container section" aria-label="Documentation versions" data-version-nav data-topic="${topic}"><p>Astro documentation v${version}</p><p><a href="${prefix}/docs/versions/">All documentation versions</a></p><ul><li><a aria-current="page" href="${base}${topic}">v${version} (current)</a></li>${links}</ul></nav>`;
+    // Keep archive navigation in document flow after the page's content. The
+    // native fixed primary navigation covers controls inserted before main.
+    html=html.replace('</head>',`<meta name="robots" content="noindex, follow"><script type="module" src="${base}version-navigation.js"></script></head>`).replace('</main>',`${nav}</main>`);
     await writeFile(path,html);
   }
   await mkdir(join(dist,'provenance'),{recursive:true});await cp(join(site,'package-lock.json'),join(dist,'provenance','package-lock.json'));
