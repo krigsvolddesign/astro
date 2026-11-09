@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@krigsvold/astro": "2.1.0",
-    "@krigsvold/core": "github:krigsvolddesign/core#64794a417bc961a90c81fcc2d384e893bc77b2c1",
+    "@krigsvold/core": "github:krigsvolddesign/core#d631d6c6865a81c68388b6704115e4953e1f8f8b",
     "astro": "7.3.2",
     "markdown-it": "14.3.3",
     "markdown-it-footnote": "4.0.0",
