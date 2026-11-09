@@ -76,7 +76,7 @@ The stock article and documentation demos set `show_toc = false`. Authors may ex
 
 ### Shared stylesheet ownership
 
-All reference CSS is exported by `@krigsvold/core@2.3.0`. Astro and Jekyll use identical `reference.css` and `fonts.css` files. Edit Core, publish it, update the exact dependency and lockfile, then run `npm run styles:sync` in `reference/`. `npm run styles:check` rejects edited or extra CSS assets. The generated asset manifest records the package version and SHA-256 of each file.
+All reference CSS is exported by `@krigsvold/core`. Astro and Jekyll use identical `reference.css` and `fonts.css` files. Edit Core, update the exact dependency and lockfile, then run `npm run styles:sync` in `reference/`. Development previews may pin a full Core Git commit; publication is a separate release decision. `npm run styles:check` rejects edited or extra CSS assets. The generated asset manifest records the package version, dependency source and SHA-256 of each file.
 
 Page templates and client code must not contain style elements, style attributes, CSS mutation calls, or local stylesheet definitions. Source and rendered-page checks enforce this. Use the Core markup classes and named data attributes instead.
 
