@@ -23,3 +23,6 @@
  .analytics-app aside, .analytics-app form { display:none; }
  .analytics-chart { break-inside:avoid; }
 }
+
+/* Source records begin a new working region after the charts. */
+.analytics-app [aria-labelledby="analytics-source-title"] { margin-top:2rem; }
