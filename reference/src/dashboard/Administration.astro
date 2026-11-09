@@ -25,7 +25,7 @@ const people=[...fixture.people].sort((a,b)=>a.name.localeCompare(b.name,'en'));
         <div><label for="people-size">Rows per page</label><select name="size" id="people-size"><option>5</option><option>10</option><option>20</option></select></div>
         <div><label for="people-density">Table density</label><select name="density" id="people-density"><option value="comfortable">Comfortable</option><option value="compact">Compact</option></select></div>
         <div><label for="people-state">State preview</label><select name="state" id="people-state"><option value="ready">Ready</option><option value="loading">Loading</option><option value="error">Error</option><option value="empty">Empty</option></select></div>
-      </div><Button  type="submit">Apply directory filters</Button><Button class="krigsvold-button--secondary" type="button" data-clear-people>Clear filters</Button></fieldset></form>
+      </div><div class="dash-form-actions"><Button  type="submit">Apply directory filters</Button><Button class="krigsvold-button--secondary" type="button" data-clear-people>Clear filters</Button></div></fieldset></form>
 <p data-dashboard-fallback>Interactive dashboard controls are unavailable. Reload to try again.</p>
       <p class="dash-status" role="status" data-dashboard-status>Published synthetic directory.</p>
       <div class="dash-administration-work"><section class="dash-panel" aria-labelledby="directory-title"><h2 id="directory-title">People directory</h2>
@@ -40,7 +40,7 @@ const people=[...fixture.people].sort((a,b)=>a.name.localeCompare(b.name,'en'));
           <div><label for="person-email">Email address</label><input id="person-email" name="email" type="email" required maxlength="254" /><p class="dash-error" id="person-email-error" hidden></p></div>
           <div><label for="person-role">Role</label><select id="person-role" name="role"><option>Researcher</option><option>Editor</option><option>Coordinator</option></select><p class="dash-error" id="person-role-error" hidden></p></div>
           <div><label for="person-status">Person status</label><select id="person-status" name="status"><option>Invited</option><option>Active</option><option>Suspended</option></select><p class="dash-error" id="person-status-error" hidden></p></div>
-        </div><Button  type="submit">Save person locally</Button><Button class="krigsvold-button--secondary" type="button" data-discard-person>Discard draft</Button></fieldset></form>
+        </div><div class="dash-form-actions"><Button  type="submit">Save person locally</Button><Button class="krigsvold-button--secondary" type="button" data-discard-person>Discard draft</Button></div></fieldset></form>
       </section>
       </div><dialog class="dash-dialog" aria-labelledby="bulk-title" data-bulk-dialog><h2 id="bulk-title">Confirm directory change</h2><p data-bulk-description></p><p>This changes only the selected synthetic records in this page’s memory.</p><div class="dash-actions"><Button  type="button" data-bulk-cancel>Cancel</Button><Button  type="button" data-bulk-confirm>Confirm change</Button></div></dialog>
       <noscript><p>Interactive filtering and editing require JavaScript. The published synthetic directory remains available; controls are disabled.</p></noscript>
