@@ -8,25 +8,3 @@ import { Button } from '@krigsvold/astro';
   </div>
   <Button type="button">Review</Button>
 </form>
-<style>
-  .reference-controls {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: end;
-    column-gap: var(--krigsvold-space-3);
-    inline-size: min(100%, 32rem);
-    margin-block: 1rem 1.5rem;
-  }
-  .reference-controls__field { display: grid; gap: var(--krigsvold-space-2); min-inline-size: 0; }
-  .reference-controls__field input {
-    inline-size: 100%;
-    block-size: var(--krigsvold-control-height);
-    min-block-size: var(--krigsvold-control-height);
-    padding-block: 0;
-  }
-  .reference-controls :global(.krigsvold-button) { align-self: end; margin: 0; }
-  @media (max-width: 22rem) {
-    .reference-controls { grid-template-columns: minmax(0, 1fr); row-gap: var(--krigsvold-space-3); }
-    .reference-controls :global(.krigsvold-button) { justify-self: start; }
-  }
-</style>
