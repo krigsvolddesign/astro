@@ -19,5 +19,12 @@ const reference=[['The Language','/language/'],['All Examples','/examples/'],['J
       <ul>{reference.map(([label,url])=><li><a href={href(url)}>{label}</a></li>)}</ul>
     </nav>
     <button class="appearance-toggle" type="button" data-appearance-toggle aria-pressed="false">Dark mode</button>
+    <div class="dashboard-rail__ownership">
+      <a class="dashboard-rail__owner" href="https://jameshoward.us/" aria-label="James Howard website">
+        <img src={href('/assets/owner.svg')} alt="" width="58" height="58"/>
+        <span><strong>Krigsvold Astro</strong><br/>A website of James Howard</span>
+      </a>
+      <p>Copyright © 2026 <span>James P. Howard, II</span></p>
+    </div>
   </div>
 </header>
