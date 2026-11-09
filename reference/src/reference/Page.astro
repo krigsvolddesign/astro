@@ -9,7 +9,7 @@ const base=import.meta.env.BASE_URL.replace(/\/$/,'');
 const href=(url:string)=>url.startsWith('/')&&!url.startsWith('//')?`${base}${url}`:url;
 const variant=page.dashboard?'plain':page.heroVariant||'compact';
 ---
-<Layout stylesheet={href("/assets/css/reference.css")} title={`${page.title} · Krigsvold Astro`} description={page.summary} mainId="main" mainTabindex={-1} bodyClass={`hero-context--${variant}${page.dashboard?' dashboard-page':''}`}>
+<Layout stylesheet={href("/assets/css/krigsvold.css")} title={`${page.title} · Krigsvold Astro`} description={page.summary} mainId="main" mainTabindex={-1} bodyClass={`hero-context--${variant}${page.dashboard?' dashboard-page':''}`}>
  <link slot="head" rel="stylesheet" href={href("/assets/css/fonts.css")}/>
  <link slot="head" rel="icon" href={href('/assets/mark.svg')}/>
 
