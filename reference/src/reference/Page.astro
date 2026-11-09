@@ -21,7 +21,7 @@ const variant=page.dashboard?'plain':page.heroVariant||'compact';
  <Fragment slot="header">{page.dashboard ? <DashboardRail href={href} current={page.id.replace('dashboard-','')}/> : <Header href={href} current={current}/>}</Fragment>
  {!page.dashboard&&<Hero page={page} href={href}/>}
  <slot/>
- <Footer slot="footer" href={href}/>
+ <Fragment slot="footer">{!page.dashboard&&<Footer href={href}/>}</Fragment>
  <script slot="body-end" is:inline src={href('/assets/js/shell.js')} defer></script>
 </Layout>
 <style is:global>
