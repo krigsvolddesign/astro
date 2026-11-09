@@ -1,6 +1,5 @@
 ---
 import { ArticleLayout, Stack, TableOfContents } from '@krigsvold/astro';
-import '@krigsvold/core/source-profile.css';
 import { localPath } from '../paths';
 import InterfaceControls from '../components/InterfaceControls.astro';
 import DemoHead from '../components/DemoHead.astro';
@@ -9,7 +8,7 @@ import DemoFooter from '../components/DemoFooter.astro';
 // Optional author-supplied contents: set true only when this document needs them.
 const show_toc = false;
 ---
-<ArticleLayout title="A clear account of the work" summary="A short introduction gives the reader enough context to begin." eyebrow="An example article" sidebarLabel="Related reading" bodyClass="krigsvold-source-profile reference-specimen">
+<ArticleLayout title="A clear account of the work" summary="A short introduction gives the reader enough context to begin." eyebrow="An example article" sidebarLabel="Related reading" bodyClass="krigsvold-source-profile reference-specimen hero-context--compact">
   <Fragment slot="head"><DemoHead/><meta name="example-head" content="forwarded"/></Fragment>
   <ReferenceHeader slot="header" home={localPath('/')} href={localPath}/>
 

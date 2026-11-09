@@ -21,3 +21,7 @@
 @media(max-width:64rem) { .example-root .dash-app .dash-layout { display:block; } }
 html[data-appearance=dark] .example-root .dash-app .krigsvold-button.btn-dark-blue { color:var(--navy-950); background:var(--ice-200); border-color:var(--ice-200); }
 html[data-appearance=dark] .example-root .dash-app .krigsvold-button.btn-outline-dark-blue { color:white; border-color:white; }
+
+/* Preserve heading and label contrast in the active workspace appearance. */
+body.krigsvold.dashboard-page main :is(h1,h2,h3,h4,h5,h6) { color:var(--krigsvold-text-strong); }
+body.krigsvold.dashboard-page main .eyebrow { color:var(--krigsvold-link); }

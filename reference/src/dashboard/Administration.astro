@@ -2,7 +2,6 @@
 import fixture from '../../page-archetypes/content/dashboards.json';
 import {dashboardSnapshotLabel} from '../../page-archetypes/jekyll/assets/js/dashboard-model.mjs';
 import {dashboardPayload,serializeForScript} from './fixture.mjs';
-import DashboardNav from './DashboardNav.astro';
 import {peerDashboardURL} from './peer.mjs';
 import Button from '@nightjar/button';
 import '../../page-archetypes/jekyll/assets/css/dashboard.css';
@@ -23,7 +22,6 @@ const people=[...fixture.people].sort((a,b)=>a.name.localeCompare(b.name,'en'));
 <style is:inline set:html={family==='martlet'?martletCSS:krigsvoldCSS}></style>
 <div class="dash-app" data-dashboard="administration" data-family={family} style={variables}>
   <div class="dash-layout">
-    <DashboardNav href={href} current="administration" />
     <div class="dash-main">
       <header class="dash-heading"><p class="eyebrow">{page.category}</p><h1>{page.title}</h1><p>{page.summary}</p></header>
       <p>Snapshot: {snapshotLabel ? <time datetime={fixture.as_of}>{snapshotLabel}</time> : <span>Invalid snapshot timestamp</span>} <a data-compare href={peer || href('/examples/dashboard-administration/')} hidden={!peer}>Compare in {peerFamily}</a></p>

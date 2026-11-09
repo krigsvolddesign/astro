@@ -1,0 +1,23 @@
+---
+import './dashboard-rail.css';
+const {href,current} = Astro.props;
+const workspaces=[['analytics','Analytics'],['administration','Administration'],['operations','Operations']];
+const reference=[['The Language','/language/'],['All Examples','/examples/'],['Journal','/journal/'],['Use This Template','/setup/']];
+---
+<header class="dashboard-rail" aria-label="Workspace navigation">
+  <div class="dashboard-rail__identity">
+    <a class="dashboard-rail__brand" href={href('/')}><img src={href('/assets/mark.svg')} alt="" width="40" height="40"/><span>Krigsvold Astro</span></a>
+    <button class="menu-button dashboard-rail__toggle" type="button" aria-controls="site-nav" aria-expanded="false">Menu</button>
+  </div>
+  <div id="site-nav" class="dashboard-rail__menus">
+    <nav class="dashboard-rail__workspace" aria-label="Dashboard navigation">
+      <p class="dashboard-rail__label">Northlight · Workspace</p>
+      <ul>{workspaces.map(([id,label])=><li><a href={href(`/examples/dashboard-${id}/`)} aria-current={current===id?'page':undefined}>{label}</a></li>)}</ul>
+    </nav>
+    <nav class="dashboard-rail__reference" aria-label="Reference site">
+      <p class="dashboard-rail__label">Krigsvold Reference</p>
+      <ul>{reference.map(([label,url])=><li><a href={href(url)}>{label}</a></li>)}</ul>
+    </nav>
+    <button class="appearance-toggle" type="button" data-appearance-toggle aria-pressed="false">Dark mode</button>
+  </div>
+</header>

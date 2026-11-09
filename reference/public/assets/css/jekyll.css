@@ -5,6 +5,7 @@
 .jekyll-document .page-index {position:sticky;top:6rem;}
 .jekyll-document .page-index .toc {margin:0;padding:1rem;background:transparent;}
 .reading-container {width:calc(100% - 2rem);max-width:48rem;margin-inline:auto;}
+.editorial-content :not(pre)>code {background:var(--krigsvold-code-bg);color:var(--krigsvold-code-text);}
 .editorial-content {min-width:0;overflow-wrap:anywhere;}
 .masthead-tags {display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1rem;}
 .masthead-tags a {font-size:.9rem;}
