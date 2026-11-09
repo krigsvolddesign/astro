@@ -3,8 +3,8 @@
   "family": "krigsvold",
   "core": {
     "name": "@krigsvold/core",
-    "version": "2.2.5",
-    "integrity": "sha512-un5CmNf21E7UKVARQTmNdmhppp+WAjR+O1bwGMTbCEr8P7ELLCQ7T9bIwGJ5d7cTakXhgOdNfSP/hzgBH6BrrA=="
+    "version": "2.3.0",
+    "integrity": "sha512-9atE2IZz7mRl1QwqLzmvn+3c+2yNADqd9wFn27LQsQvGk3jIb2YXCS4TRJ6JHuR2YjDaObkQhQ2Hgnf8lTCK6g=="
   },
   "astro": "7.3.2"
 }

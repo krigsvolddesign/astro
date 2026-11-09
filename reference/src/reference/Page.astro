@@ -1,0 +1,29 @@
+---
+import {Layout} from '@krigsvold/astro';
+import Header from './Header.astro';
+import DashboardRail from '../dashboard/DashboardRail.astro';
+import Hero from './Hero.astro';
+import Footer from './Footer.astro';
+const {page,current=''}=Astro.props;
+const base=import.meta.env.BASE_URL.replace(/\/$/,'');
+const href=(url:string)=>url.startsWith('/')&&!url.startsWith('//')?`${base}${url}`:url;
+const variant=page.dashboard?'plain':page.heroVariant||'compact';
+---
+<Layout title={`${page.title} · Krigsvold Astro`} description={page.summary} mainId="main" mainTabindex={-1} bodyClass={`hero-context--${variant}${page.dashboard?' dashboard-page':''}`}>
+ <link slot="head" rel="icon" href={href('/assets/mark.svg')}/>
+ <link slot="head" rel="stylesheet" href={href('/assets/css/fonts.css')}/>
+ <link slot="head" rel="stylesheet" href={href('/assets/css/shell.css')}/>
+ <link slot="head" rel="stylesheet" href={href('/assets/css/jekyll.css')}/>
+ <link slot="head" rel="stylesheet" href={href('/assets/css/examples.css')}/>
+ <link slot="head" rel="stylesheet" href={href('/assets/css/examples-family.css')}/>
+ {page.dashboard&&<link slot="head" rel="stylesheet" href={href('/assets/css/dashboard-family.css')}/>}
+ <script slot="head" is:inline>try{const mode=localStorage.getItem('design-appearance')==='dark'?'dark':'light';document.documentElement.dataset.appearance=mode;document.documentElement.dataset.krigsvold=mode}catch{}</script>
+ <Fragment slot="header">{page.dashboard ? <DashboardRail href={href} current={page.id.replace('dashboard-','')}/> : <Header href={href} current={current}/>}</Fragment>
+ {!page.dashboard&&<Hero page={page} href={href}/>}
+ <slot/>
+ <Fragment slot="footer">{!page.dashboard&&<Footer href={href}/>}</Fragment>
+ <script slot="body-end" is:inline src={href('/assets/js/shell.js')} defer></script>
+</Layout>
+<style is:global>
+ .krigsvold .editorial-content :is(h1,h2,h3) { text-wrap:wrap; }
+</style>

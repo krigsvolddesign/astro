@@ -1,0 +1,40 @@
+/* The Jekyll dashboard heading and panel rules were scoped to .example-root.
+   Astro dashboards use .dash-app directly, so apply the same working hierarchy. */
+.dash-app .dash-heading h1 { font-size:clamp(2rem,3.4vw,3rem); line-height:1.15; margin:.5rem 0 1rem; }
+.dash-app .dash-panel h2 { font-size:1.3rem; line-height:1.25; margin:0 0 .75rem; }
+.dash-app p { margin:0 0 1rem; }
+/* Keep working controls and long words inside the available space when text is enlarged. */
+:is(.analytics-app,.dash-app) { overflow-wrap:anywhere; }
+:is(.analytics-app,.dash-app) button { max-inline-size:100%; min-inline-size:0; white-space:normal; overflow-wrap:anywhere; }
+@media(max-width:42rem) {
+  /* Keep a usable working area when the user's root text size is enlarged. */
+  .analytics-app, .dash-app .dash-layout { width:calc(100% - 2 * min(1rem, 16px)); }
+  .analytics-app :is(aside,form,.analytics-chart), .dash-app :is(.dash-sidebar,.dash-toolbar,.dash-panel) { padding-inline:min(1rem, 16px); }
+  :is(.analytics-app,.dash-app) button { padding-inline:min(1rem, 12px); }
+}
+
+/* Translate the canonical Krigsvold working regions to the native host scope. */
+.example-root .dash-app .dash-layout { grid-template-columns:12rem minmax(0,1fr); gap:2rem; }
+.example-root .dash-app .dash-sidebar nav a { text-transform:uppercase; font-size:.8rem; letter-spacing:.035em; }
+.example-root .dash-app .krigsvold-button.btn-dark-blue { color:white; background:var(--navy-900); border-color:var(--navy-900); }
+.example-root .dash-app .krigsvold-button.btn-outline-dark-blue { color:var(--navy-900); background:transparent; border:1px solid var(--navy-900); }
+@media(max-width:64rem) { .example-root .dash-app .dash-layout { display:block; } }
+html[data-appearance=dark] .example-root .dash-app .krigsvold-button.btn-dark-blue { color:var(--navy-950); background:var(--ice-200); border-color:var(--ice-200); }
+html[data-appearance=dark] .example-root .dash-app .krigsvold-button.btn-outline-dark-blue { color:white; border-color:white; }
+
+/* Preserve heading and label contrast in the active workspace appearance. */
+body.krigsvold.dashboard-page main :is(h1,h2,h3,h4,h5,h6) { color:var(--krigsvold-text-strong); }
+body.krigsvold.dashboard-page main .eyebrow { color:var(--krigsvold-link); }
+
+/* Checkbox labels remain a generous target; the native box stays compact. */
+.dash-app label.example-checkbox { display:flex; flex-direction:row; align-items:center; gap:.75rem; min-height:2.75rem; }
+.dash-app input[type=checkbox] { flex:0 0 1.2rem; width:1.2rem; height:1.2rem; min-width:0; min-height:0; max-width:1.2rem; margin:0; padding:0; accent-color:var(--ex-link); }
+
+/* Native date fields must not inherit the prose line-height. Keep the
+   dashboard's existing 2.75rem control size consistent across field types. */
+body.krigsvold.dashboard-page :is(input:not([type=checkbox]):not([type=radio]),select) {
+  height:2.75rem;
+  min-height:2.75rem;
+  line-height:normal;
+  padding-block:.5rem;
+}
