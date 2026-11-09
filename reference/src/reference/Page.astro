@@ -1,6 +1,7 @@
 ---
 import {Layout} from '@krigsvold/astro';
 import Header from './Header.astro';
+import DashboardRail from '../dashboard/DashboardRail.astro';
 import Hero from './Hero.astro';
 import Footer from './Footer.astro';
 const {page,current=''}=Astro.props;
@@ -17,7 +18,7 @@ const variant=page.dashboard?'plain':page.heroVariant||'compact';
  <link slot="head" rel="stylesheet" href={href('/assets/css/examples-family.css')}/>
  {page.dashboard&&<link slot="head" rel="stylesheet" href={href('/assets/css/dashboard-family.css')}/>}
  <script slot="head" is:inline>try{const mode=localStorage.getItem('design-appearance')==='dark'?'dark':'light';document.documentElement.dataset.appearance=mode;document.documentElement.dataset.krigsvold=mode}catch{}</script>
- <Header slot="header" href={href} current={current}/>
+ <Fragment slot="header">{page.dashboard ? <DashboardRail href={href} current={page.id.replace('dashboard-','')}/> : <Header href={href} current={current}/>}</Fragment>
  {!page.dashboard&&<Hero page={page} href={href}/>}
  <slot/>
  <Footer slot="footer" href={href}/>

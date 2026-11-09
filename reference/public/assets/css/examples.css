@@ -28,7 +28,7 @@
 html[data-appearance=dark] .example-prose :is(blockquote,.footnotes) { color: var(--ex-text); }
 .example-prose :is(ul,ol) { padding-inline-start: 1.5rem; }
 .example-prose pre { overflow-x: auto; max-width: 100%; padding: 1.25rem; background: var(--ex-panel); color: var(--ex-text); }
-.example-prose code { font-family: var(--ex-mono); font-size: .9em; }
+.example-prose code { font-family: var(--ex-mono); font-size: .9em; color:var(--ex-text); }
 .example-prose :not(pre) > code { background: var(--ex-panel); padding: .1em .3em; }
 .example-prose math { font-size: 1.4rem; margin-block: 1rem; }
 .example-actions, .example-context { display: flex; flex-wrap: wrap; gap: .75rem; margin-block: 1.5rem; }

@@ -1,6 +1,5 @@
 ---
 import { Layout, Section, SectionHeading, Stack, Cluster, Grid, Sidebar, Split, Card, Button } from '@krigsvold/astro';
-import '@krigsvold/core/source-profile.css';
 const letters='abcdefghijklmnopqrstuvwxyz'.repeat(12);
 import { localPath } from '../paths';
 import DemoHead from '../components/DemoHead.astro';
@@ -8,7 +7,7 @@ import ReferenceHeader from '../reference/Header.astro';
 import ReferenceFooter from '../reference/Footer.astro';
 import ReferenceMasthead from '../reference/Hero.astro';
 ---
-<Layout title="Layout lab" bodyClass="krigsvold-source-profile reference-specimen">
+<Layout title="Layout lab" bodyClass="krigsvold-source-profile reference-specimen hero-context--compact">
   <DemoHead slot="head"/>
   <ReferenceHeader slot="header" home={localPath('/')} href={localPath}/>
 

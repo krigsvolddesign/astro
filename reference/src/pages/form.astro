@@ -1,13 +1,12 @@
 ---
 import { Layout, Section, Stack, Button } from '@krigsvold/astro';
-import '@krigsvold/core/source-profile.css';
 import { localPath } from '../paths';
 import DemoHead from '../components/DemoHead.astro';
 import ReferenceHeader from '../reference/Header.astro';
 import ReferenceFooter from '../reference/Footer.astro';
 import ReferenceMasthead from '../reference/Hero.astro';
 ---
-<Layout title="Registration example" mainTabindex={-1} bodyClass="krigsvold-source-profile reference-specimen">
+<Layout title="Registration example" mainTabindex={-1} bodyClass="krigsvold-source-profile reference-specimen hero-context--compact">
   <DemoHead slot="head"/>
   <ReferenceHeader slot="header" home={localPath('/')} href={localPath}/>
 
