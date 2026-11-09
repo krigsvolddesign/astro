@@ -29,3 +29,12 @@ body.krigsvold.dashboard-page main .eyebrow { color:var(--krigsvold-link); }
 /* Checkbox labels remain a generous target; the native box stays compact. */
 .dash-app label.example-checkbox { display:flex; flex-direction:row; align-items:center; gap:.75rem; min-height:2.75rem; }
 .dash-app input[type=checkbox] { flex:0 0 1.2rem; width:1.2rem; height:1.2rem; min-width:0; min-height:0; max-width:1.2rem; margin:0; padding:0; accent-color:var(--ex-link); }
+
+/* Native date fields must not inherit the prose line-height. Keep the
+   dashboard's existing 2.75rem control size consistent across field types. */
+body.krigsvold.dashboard-page :is(input:not([type=checkbox]):not([type=radio]),select) {
+  height:2.75rem;
+  min-height:2.75rem;
+  line-height:normal;
+  padding-block:.5rem;
+}
