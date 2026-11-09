@@ -28697,8 +28697,7 @@ article figure { margin: 1.5rem 0; padding: 0; }
 .news-listing h2 { margin: .2rem 0 .8rem; font-size: 1.65rem; }
 .news-listing h2 a { color: var(--navy-950); text-decoration: none; }
 .pagination { display: flex; justify-content: space-between; padding-top: 2rem; border-top: 1px solid var(--rule); }
-/* Search spacing is host composition; Core owns native control typography, padding, borders and radius. */
-.site-search-input { margin: .5rem 0 2rem; }
+.site-search-input { margin: .5rem 0 2rem; padding: .9rem; border: 1px solid #8c98a2; border-radius: var(--krigsvold-radius-control); font-size: 1.1rem; }
 .result-line { margin: 0 0 2rem; padding: 0 0 1.5rem; border-bottom: 1px solid var(--rule); }
 .result-line h2 { margin: 0 0 .4rem; font-size: 1.35rem; }
 .search-meta { margin: 0; color: var(--muted) !important; font-size: .8rem; }
