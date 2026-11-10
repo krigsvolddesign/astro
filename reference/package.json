@@ -5,12 +5,16 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "styles:sync": "node scripts/sync-core-styles.mjs",
+    "styles:check": "node scripts/sync-core-styles.mjs --check",
+    "prebuild": "npm run styles:check",
+    "postbuild": "node scripts/audit-pages.mjs"
   },
   "dependencies": {
-    "@krigsvold/astro": "2.0.6",
+    "@krigsvold/astro": "2.1.0",
+    "@krigsvold/core": "github:krigsvolddesign/core#fbe6c8719958c59db1b6983ded216c789ee70f5c",
     "astro": "7.3.2",
-    "@krigsvold/core": "2.2.5",
     "markdown-it": "14.3.3",
     "markdown-it-footnote": "4.0.0",
     "sanitize-html": "2.18.1"

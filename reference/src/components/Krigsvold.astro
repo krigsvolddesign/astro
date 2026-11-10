@@ -12,7 +12,7 @@ const contents=page.toc??page.sections.map(section=>({id:section.id,title:sectio
  <div class:list={['example-wrap',reading&&'example-reading']}>
  {page.id!=='index'&&<nav class="example-breadcrumb" aria-label="Breadcrumb"><a href={href('/')}>Overview</a><span aria-hidden="true">/</span><a href={href('/examples/')}>Examples</a><span aria-hidden="true">/</span><span aria-current="page">{page.semantic_class?.replaceAll('-',' ')}</span></nav>}
  <div>
- <article aria-labelledby="page-title">{page.show_toc===true&&contents.length>0&&<nav class="example-local-index" aria-label="Manual contents"><p class="eyebrow">Manual contents</p><ol>{contents.map(item=><li><a href={`#${item.id}`}>{item.title}</a></li>)}</ol></nav>}<div class:list={[page.id==='report'&&'example-report-body']}><Content page={page} href={href} base={base} Button={Button}/></div></article>
+ <article aria-labelledby="page-title">{page.show_toc===true&&contents.length>0&&<nav class="example-local-index" aria-label="Manual contents"><p class="eyebrow">Manual contents</p><ol>{contents.map(item=><li><a href={`#${item.id}`}>{item.title}</a></li>)}</ol></nav>}<div class:list={[page.id==='report'&&'example-report-body']}>{Astro.slots.has('default') ? <slot/> : <Content page={page} href={href} base={base} Button={Button}/>}</div></article>
  </div>
  {page.id!=='index'&&<p class="example-port-note">A {page.semantic_class?.replaceAll('-',' ')} recipe in Krigsvold. <a href={href('/examples/integrations/')}>Capabilities and integration boundaries</a> · <a href={href('/examples/')}>All examples</a></p>}
  </div></div>}

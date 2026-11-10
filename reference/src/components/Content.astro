@@ -50,12 +50,3 @@ const {page, href, base, Button} = Astro.props;
     {section.actions && <ul class="recipe-actions example-actions">{section.actions.map(action => <li><Button class="btn btn-dark-blue" href={href(action.url)} download={action.download}>{action.label}</Button></li>)}</ul>}
   </div></section>)}
 </div>
-<style>
-.recipe { min-width:0; overflow-wrap:anywhere; }
-.recipe figure { margin-inline:0; }
-.recipe figure img { max-width:100%; height:auto; }
-.recipe-table { max-width:100%; overflow-x:auto; }
-.recipe-tags { display:flex; flex-wrap:wrap; gap:1rem; padding:0; list-style:none; }
-.recipe-actions { list-style:none; padding:0; display:flex; flex-wrap:wrap; gap:1rem; }
-@media print { [data-list-item][hidden] { display:list-item!important; } [data-pagination] { display:none!important; } }
-</style>
