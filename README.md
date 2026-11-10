@@ -1,13 +1,13 @@
 # Krigsvold for Astro
 
-`@krigsvold/astro` 2.x integrates the independently published `@krigsvold/core` package. Version 2.0.6 makes contents navigation optional and inline in the reference app, and reading layouts, retaining the Krigsvold visual language and existing component slots.
+`@krigsvold/astro` 3.x requires `@krigsvold/core@^3.0.0`. Upgrade both packages together and replace canonical `reference.css` imports with `krigsvold.css`. Existing component names, props, and slots remain available. See [upgrading to Astro 3](docs/migration-3.md).
 
 `@krigsvold/astro` provides reusable Astro layouts and components. The framework-independent [`@krigsvold/core`](https://github.com/krigsvolddesign/core) package owns the design definitions and font roles, extracted from krigsvold.org. Astro adds composition, never a competing palette.
 
 ## Install
 
 ```sh
-npm install @krigsvold/core @krigsvold/astro astro
+npm install @krigsvold/core@^3.0.0 @krigsvold/astro@^3.0.0 astro
 ```
 
 The GitHub organization is `krigsvolddesign`; the npm scope is `krigsvold`.
@@ -58,11 +58,11 @@ Version 1.1 adds `Stack`, `Cluster`, `Grid`, `Sidebar`, `Split`, `Section`, `Pag
 
 ## Releases
 
-npm publication uses the existing stage-only trusted publisher and an explicit npm owner approval. Protected tags subsequently complete verified GitHub source releases. See [release setup](docs/releasing.md) for the one-time package authorization and release order.
+An accepted, unused version on `main` is published through the existing trusted publisher. Its manual workflow also supports staging. Protected tags complete verified GitHub source releases. See [release setup](docs/releasing.md) for the one-time package authorization and release order.
 
 ## Experimental UI language
 
-The 1.2.x line historically used `@krigsvold/theme`. Astro 2.1.0 requires `@krigsvold/core@^2.3.0`; existing component APIs and slots remain available. [New contents/footer contracts and migration](docs/consolidation.md) are additive; existing slots, default footer, and supporting sidebar behavior remain available. The reference article exercises the additions.
+The 1.2.x line historically used `@krigsvold/theme`. Astro 3.0.0 requires `@krigsvold/core@^3.0.0`; existing component APIs and slots remain available. [New contents/footer contracts and migration](docs/consolidation.md) are additive; existing slots, default footer, and supporting sidebar behavior remain available. The reference article exercises the additions.
 
 ## Forms
 

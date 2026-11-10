@@ -22,23 +22,17 @@ try {
   }
   for(const archive of [coreArchive,astroArchive].filter(Boolean))await cp(join(temp,archive),join(site,'vendor',archive));
   const pkg=JSON.parse(await readFile(join(site,'package.json'),'utf8'));
-  const coreSpec=pkg.dependencies['@krigsvold/core'];
-  const referenceLock=JSON.parse(await readFile(join(site,'package-lock.json'),'utf8'));
-  pkg.dependencies['@krigsvold/core']=core?'file:vendor/'+coreArchive:coreSpec;
+  pkg.dependencies['@krigsvold/core']=core?'file:vendor/'+coreArchive:pin.core.version;
   pkg.dependencies['@krigsvold/astro']='file:vendor/'+astroArchive;
   if(process.env.KRIGSVOLD_ASTRO_VERSION)pkg.dependencies.astro=process.env.KRIGSVOLD_ASTRO_VERSION;
   await writeFile(join(site,'package.json'),JSON.stringify(pkg,null,2)+'\n');
   execFileSync('npm',['install','--ignore-scripts','--no-audit','--no-fund'],{cwd:site,stdio:'inherit',timeout:180000});
   if(!core){
     const lock=JSON.parse(await readFile(join(site,'package-lock.json'),'utf8')),installed=lock.packages?.[`node_modules/${pin.core.name}`];
-    if(coreSpec===pin.core.version){assert.equal(installed?.version,pin.core.version);assert.equal(installed?.integrity,pin.core.integrity);}
-    else {
-      assert.match(coreSpec,/^github:krigsvolddesign\/core#[a-f0-9]{40}$/,'Development Core must use an immutable source commit');
-      const expected=referenceLock.packages[`node_modules/${pin.core.name}`];
-      assert.equal(installed?.resolved,'git+ssh://git@github.com/krigsvolddesign/core.git#'+coreSpec.split('#')[1]);assert.equal(installed?.resolved,expected.resolved);
-      assert.equal(installed?.version,expected.version);assert.equal(installed?.integrity,expected.integrity);
-    }
+    assert.equal(installed?.version,pin.core.version);assert.equal(installed?.integrity,pin.core.integrity);
   }
+  // The temporary consumer changes Core identity; copy that package's canonical CSS and manifest.
+  execFileSync('npm',['run','styles:sync'],{cwd:site,stdio:'inherit',timeout:30000});
   execFileSync('npm',['run','build'],{cwd:site,stdio:'inherit',timeout:180000,env:{...process.env,NIGHTJAR_BASE:'/'}});
   await checkDashboardFamily(join(site,'dist'),'krigsvold');
   const html=await readFile(join(site,'dist/index.html'),'utf8');
